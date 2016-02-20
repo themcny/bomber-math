@@ -6,33 +6,23 @@ var velX = 0.0;
 var velY = 0.0;
 var gravity = 0.5;
 var onGround = false;
-// window.onload = jump();
-// window.addEventListener("mousedown", startJump, false);
-// window.addEventListener("mouseup", endJump, false);
 
 window.addEventListener('keypress', function (e) {
-    if (e.keyCode !== 13) {
-        console.log('enter')
-        startJump();
-        count();
+  //spacebar
+    if (e.keyCode == 13) {
+        startJump(4.0, -12.0);
         endJump();
+    }else if (e.keyCode == 32) {
+      startJump(-5.0, 4.0);
+      endJump();
     }
 }, false);
 loop();
-function count(){
-  for(var i=0; i < 1000; i ++){
-    console.log(i)
-  }
-}
-function startJump(){
-  console.log('startJump')
-  console.log(velX)
+function startJump(vx, vy){
   if(onGround){
-    console.log('onGround')
-    velX = 4.0;
-    velY = -12.0;
+    velX = vx;
+    velY = vy;
     onGround = false;
-    console.log(velX);
   }
 }
 function endJump(){
@@ -70,5 +60,8 @@ function render(){
   ctx.lineTo(posX + 10, posY);
   ctx.lineTo(posX - 10, posY);
   ctx.closePath();
+  ctx.rect(0,175,150,100);
+  ctx.rect((500-175),175,150,100);
+
   ctx.stroke();
 }
