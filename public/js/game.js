@@ -1,18 +1,27 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var posX = 100.0;
-var posY = 175.0;
+var posY = 176.0;
 var velX = 0.0;
 var velY = 0.0;
 var gravity = 0.5;
 var onGround = false;
-window.addEventListener("mousedown", startJump, false);
-window.addEventListener("mouseup", endJump, false);
+
+window.addEventListener('keypress', function (e) {
+  //spacebar
+    if (e.keyCode == 13) {
+        startJump(4.0, -12.0);
+        endJump();
+    }else if (e.keyCode == 32) {
+      startJump(-5.0, 4.0);
+      endJump();
+    }
+}, false);
 loop();
-function startJump(){
+function startJump(vx, vy){
   if(onGround){
-    velX = 4.0;
-    velY = -12.0;
+    velX = vx;
+    velY = vy;
     onGround = false;
   }
 }
@@ -22,27 +31,28 @@ function endJump(){
   }
 }
 function loop(){
-  Update();
-  Render();
-  window.setTimeout(loop, 33);
+  update();
+  render();
+  window.setTimeout(loop, 33 );
 }
-function Update(){
+function update(){
   velY += gravity;
   posY += velY;
   posX += velX;
   if(posY > 175.0){
     posY = 175.0;
     velY = 0.0;
+    velX = 0.0;
     onGround = true;
   }
 // if(posX < 10 || posX > 190)
 //     velX *= -1;
 }
-function Render(){
-  ctx.clearRect(0, 0, 200, 200);
+function render(){
+  ctx.clearRect(0, 0, 500, 500);
   ctx.beginPath();
-  ctx.moveTo(0,175);
-  ctx.lineTo(200,175);
+  ctx.moveTo(0,176);
+  ctx.lineTo(500,175);
   ctx.stroke();
   ctx.beginPath();
   ctx.moveTo(posX - 10, posY - 20);
@@ -50,5 +60,8 @@ function Render(){
   ctx.lineTo(posX + 10, posY);
   ctx.lineTo(posX - 10, posY);
   ctx.closePath();
+  ctx.rect(0,175,150,100);
+  ctx.rect((500-175),175,150,100);
+
   ctx.stroke();
 }
