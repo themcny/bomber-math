@@ -6,6 +6,7 @@ var velX = 0.0;
 var velY = 0.0;
 var gravity = 0.5;
 var onGround = false;
+
 loop();
 function startJump(vx, vy){
   if(onGround){
@@ -70,7 +71,7 @@ function render(){
 
 function damage(otherPlayer){
   playerHealth = document.getElementById(otherPlayer);
-  playerHealth.value = playerHealth.value - 10;
+  playerHealth.value = playerHealth.value - 100;
 }
 
 function checkWin(){
@@ -78,6 +79,7 @@ function checkWin(){
   twohealth = parseInt(document.getElementById('twohealth').value)
   console.log(twohealth)
   if(onehealth <= 0 || twohealth <= 0){
-    alert('game over');
+    if(alert('Game Over')){}
+    else    window.location.reload();
   }
 }
