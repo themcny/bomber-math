@@ -8,11 +8,14 @@ var gravity = 0.5;
 var onGround = false;
 
 window.addEventListener('keypress', function (e) {
-  //spacebar
-    if (e.keyCode == 13) {
-        startJump(4.0, -12.0);
-        endJump();
-    }else if (e.keyCode == 32) {
+    if (e.keyCode == 13 ) {
+      // enter
+      // model right guess player one
+      startJump(4.0, -12.0);
+      endJump();
+    } else if (e.keyCode == 32) {
+      // spacebar
+      // model wrong guess player one
       startJump(-5.0, 4.0);
       endJump();
     }
@@ -45,8 +48,6 @@ function update(){
     velX = 0.0;
     onGround = true;
   }
-// if(posX < 10 || posX > 190)
-//     velX *= -1;
 }
 function render(){
   ctx.clearRect(0, 0, 500, 500);
