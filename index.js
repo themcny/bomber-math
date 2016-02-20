@@ -31,10 +31,8 @@ http.listen(3000, function(){
 
 
 
-
-
-
 function Player(options) {
   this.health = 10;
   this.id = options.id;
 }
+
