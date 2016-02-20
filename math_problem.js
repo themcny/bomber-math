@@ -11,3 +11,4 @@ function Problem() {
   this.answer = this.number1 * this.number2;
 
 }
+
