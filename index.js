@@ -21,11 +21,3 @@ http.listen(3000, function(){
   console.log('listening on http://192.168.1.75:3000');
 });
 
-
-
-
-
-
-function Player() {
-  this.health = 10;
-}

@@ -65,3 +65,9 @@ function render(){
 
   ctx.stroke();
 }
+
+function damage(otherPlayer){
+  playerHealth = document.getElementById(otherPlayer);
+  console.log(playerHealth)
+  playerHealth.value = playerHealth.value - 10;
+}
