@@ -14,18 +14,25 @@ window.addEventListener('keypress', function (e) {
     if (e.keyCode !== 13) {
         console.log('enter')
         startJump();
+        count();
         endJump();
-        resetVel();
     }
 }, false);
 loop();
+function count(){
+  for(var i=0; i < 1000; i ++){
+    console.log(i)
+  }
+}
 function startJump(){
   console.log('startJump')
   console.log(velX)
   if(onGround){
+    console.log('onGround')
     velX = 4.0;
     velY = -12.0;
     onGround = false;
+    console.log(velX);
   }
 }
 function endJump(){
@@ -33,8 +40,11 @@ function endJump(){
     velY = -6.0;
   }
   console.log('endJump')
+  if (posY == 175) {
+    console.log('here')
+    velX = 0;
+  }
 }
-function resetVel(
 function loop(){
   update();
   render();
