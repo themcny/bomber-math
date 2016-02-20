@@ -6,23 +6,8 @@ var velX = 0.0;
 var velY = 0.0;
 var gravity = 0.5;
 var onGround = false;
-
-// window.addEventListener('keypress', function (e) {
-//     if (e.keyCode == 13 ) {
-//       // enter
-//       // model right guess player one
-//       startJump(4.0, -12.0);
-//       endJump();
-//     } else if (e.keyCode == 32) {
-//       // spacebar
-//       // model wrong guess player one
-//       startJump(-5.0, 4.0);
-//       endJump();
-//     }
-// }, false);
 loop();
 function startJump(vx, vy){
-  console.log('starting jump')
   if(onGround){
     velX = vx;
     velY = vy;
@@ -34,21 +19,34 @@ function endJump(){
     velY = -6.0;
   }
 }
-function loop(){
-  update();
+function loop(player){
+  update(player);
   render();
   window.setTimeout(loop, 33 );
 }
-function update(){
-  velY += gravity;
-  posY += velY;
-  posX += velX;
-  if(posY > 175.0){
-    posY = 175.0;
-    velY = 0.0;
-    velX = 0.0;
-    onGround = true;
+function update(player){
+  if (player == 1){
+    velY += gravity;
+    posY += velY;
+    posX += velX;
+    if(posY > 175.0){
+      posY = 175.0;
+      velY = 0.0;
+      velX = 0.0;
+      onGround = true;
+    }
+  } else if(player == 2){
+    velY += gravity;
+    posY += velY;
+    posX -= velX;
+    if(posY > 175.0){
+      posY = 175.0;
+      velY = 0.0;
+      velX = 0.0;
+      onGround = true;
+    }
   }
+
 }
 function render(){
   ctx.clearRect(0, 0, 500, 500);
