@@ -1,6 +1,9 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
   res.sendfile('index.html');
@@ -15,3 +18,8 @@ io.on('connection', function(socket){
 http.listen(3000, '192.168.1.75', function(){
   console.log('listening on http://192.168.1.75:3000');
 });
+
+
+
+
+
