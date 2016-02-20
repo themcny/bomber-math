@@ -6,3 +6,20 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #messages { list-style-type: none; margin: 0; padding: 0; }
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
+
+#cannon {
+  position: fixed;
+  left:10px;
+  height: 50px;
+  width: 50px;
+  border: 1px solid green;
+  animation-name: tilt;
+  animation-duration: 3s ;
+  animation-interation-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes tilt {
+  0%{transform:rotate(0deg);}
+  50%{transform:rotate(15deg);}
+  100%{transform:rotate(30deg);}
+}
