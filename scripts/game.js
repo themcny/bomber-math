@@ -39,11 +39,6 @@ function endJump(){
   if(velY < -6.0){
     velY = -6.0;
   }
-  console.log('endJump')
-  if (posY == 175) {
-    console.log('here')
-    velX = 0;
-  }
 }
 function loop(){
   update();
@@ -57,6 +52,7 @@ function update(){
   if(posY > 175.0){
     posY = 175.0;
     velY = 0.0;
+    velX = 0.0;
     onGround = true;
   }
 // if(posX < 10 || posX > 190)
