@@ -30,8 +30,12 @@ $('form').submit(function(){
 socket.on('chat message', function(msg){
 
   if (quizQuestion.answer === parseInt(msg)) {
+    startJump(4.0, -12.0);
+    endJump();
     $('#messages').append($('<li>').text("you win!"));
   } else {
+    startJump(-5.0, 4.0);
+    endJump();
     $('#messages').append($('<li>').text("you lose!"));
   }
   newQuestion();
