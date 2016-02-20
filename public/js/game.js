@@ -22,6 +22,7 @@ var onGround = false;
 // }, false);
 loop();
 function startJump(vx, vy){
+  console.log('starting jump')
   if(onGround){
     velX = vx;
     velY = vy;
