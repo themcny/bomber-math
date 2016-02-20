@@ -27,6 +27,8 @@ $('form').submit(function(){
   $('#m').val('');
   return false;
 });
+
+
 socket.on('chat message', function(msg){
 
   if (quizQuestion.answer === parseInt(msg)) {
