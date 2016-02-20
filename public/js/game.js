@@ -6,17 +6,6 @@ var velX = 0.0;
 var velY = 0.0;
 var gravity = 0.5;
 var onGround = false;
-
-window.addEventListener('keypress', function (e) {
-  //spacebar
-    if (e.keyCode == 13) {
-        startJump(4.0, -12.0);
-        endJump();
-    }else if (e.keyCode == 32) {
-      startJump(-5.0, 4.0);
-      endJump();
-    }
-}, false);
 loop();
 function startJump(vx, vy){
   if(onGround){
@@ -30,23 +19,36 @@ function endJump(){
     velY = -6.0;
   }
 }
-function loop(){
-  update();
+function loop(player){
+  update(player);
   render();
+  checkWin();
+
   window.setTimeout(loop, 33 );
 }
-function update(){
-  velY += gravity;
-  posY += velY;
-  posX += velX;
-  if(posY > 175.0){
-    posY = 175.0;
-    velY = 0.0;
-    velX = 0.0;
-    onGround = true;
+function update(player){
+  if (player == 1){
+    velY += gravity;
+    posY += velY;
+    posX += velX;
+    if(posY > 175.0){
+      posY = 175.0;
+      velY = 0.0;
+      velX = 0.0;
+      onGround = true;
+    }
+  } else if(player == 2){
+    velY += gravity;
+    posY += velY;
+    posX -= velX;
+    if(posY > 175.0){
+      posY = 175.0;
+      velY = 0.0;
+      velX = 0.0;
+      onGround = true;
+    }
   }
-// if(posX < 10 || posX > 190)
-//     velX *= -1;
+
 }
 function render(){
   ctx.clearRect(0, 0, 500, 500);
@@ -64,4 +66,18 @@ function render(){
   ctx.rect((500-175),175,150,100);
 
   ctx.stroke();
+}
+
+function damage(otherPlayer){
+  playerHealth = document.getElementById(otherPlayer);
+  playerHealth.value = playerHealth.value - 10;
+}
+
+function checkWin(){
+  onehealth = parseInt(document.getElementById('onehealth').value)
+  twohealth = parseInt(document.getElementById('twohealth').value)
+  console.log(twohealth)
+  if(onehealth <= 0 || twohealth <= 0){
+    alert('game over');
+  }
 }

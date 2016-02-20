@@ -2,15 +2,17 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
+
   </head>
   <body>
     <p><canvas id="canvas" width="500" height="500"></p>
-    <p>Click to jump!</p>
-    <script src="scripts/game.js"></script>
+    <progress id="onehealth" value="100" max="100"></progress>
+    <progress id="twohealth" value="100" max="100"></progress>
+    <script src="js/game.js"></script>
 
 
     <ul id="messages"></ul>
