@@ -32,6 +32,7 @@ socket.on('chat message', function(msg){
   if (quizQuestion.answer === parseInt(msg)) {
     startJump(4.0, -12.0);
     endJump();
+    damage('twohealth');
     $('#messages').append($('<li>').text("you win!"));
   } else {
     startJump(-5.0, 4.0);
