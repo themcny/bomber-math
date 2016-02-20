@@ -3,6 +3,26 @@
   <title></title>
 </head>
 <body>
+  <canvas id="myCanvas" width="1000" height="1000" style="border: 1px solid red"></canvas>
+  <script>
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
 
+    ctx.beginPath();
+    ctx.rect(188, 50, 200, 100);
+    ctx.fillStyle = 'yellow';
+    ctx.fill();
+    ctx.lineWidth = 7;
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.rect(0, 200, 200, 100);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+    ctx.lineWidth = 7;
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+  </script>
 </body>
 </html>
