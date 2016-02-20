@@ -22,6 +22,8 @@ function endJump(){
 function loop(player){
   update(player);
   render();
+  checkWin();
+
   window.setTimeout(loop, 33 );
 }
 function update(player){
@@ -68,6 +70,14 @@ function render(){
 
 function damage(otherPlayer){
   playerHealth = document.getElementById(otherPlayer);
-  console.log(playerHealth)
   playerHealth.value = playerHealth.value - 10;
+}
+
+function checkWin(){
+  onehealth = parseInt(document.getElementById('onehealth').value)
+  twohealth = parseInt(document.getElementById('twohealth').value)
+  console.log(twohealth)
+  if(onehealth <= 0 || twohealth <= 0){
+    alert('game over');
+  }
 }
