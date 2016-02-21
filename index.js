@@ -25,13 +25,17 @@ io.on('connection', function(socket){
   socket.room = 'Lobby';
   socket.join('Lobby')
   lastPlayerId ++;
+  console.log(io.sockets.adapter.rooms['Lobby'].length)
   if (io.sockets.adapter.rooms['Lobby'].length < 2){
-    var playerTwo = newComer;
-    console.log(playerTwo);
-  } else{
     var playerOne = newComer;
-    console.log('play one set');
+    console.log('player one set')
     console.log(playerOne);
+  } else if (io.sockets.adapter.rooms['Lobby'].length === 2){
+    var playerTwo = newComer;
+    console.log('play one set');
+    console.log(playerTwo);
+  } else {
+    console.log('spectator')
   }
   // var clientNumber = io.sockets.adapter.rooms['Lobby'].length;
   // console.log(newComer);
