@@ -18,9 +18,14 @@ io.on('connection', function(socket){
   socket.room = 'Lobby';
   socket.join('Lobby')
 
-  socket.on('answer submit', function(msg){
+  socket.on('answer submit p1', function(msg){
     console.log(msg);
-    io.emit('answer submit', msg);
+    io.emit('answer submit p1', msg);
+  });
+
+  socket.on('answer submit p2', function(msg){
+    console.log(msg);
+    io.emit('answer submit p2', msg);
   });
 
   socket.on('join room', function(){
@@ -38,7 +43,7 @@ io.on('connection', function(socket){
         socket.join(socket.room)
         // Find the player already in the room and assign as playerOne
         var playerOneObj = io.sockets.adapter.rooms[socket.room].sockets;
-        var playerOneId = Object.keys(playerOneObj)[1]
+        var playerOneId = Object.keys(playerOneObj)[0]
         var playerOne = new Player({id: playerOneId, playerId: 1})
         // Find the new player and assign as playerTwo
         var playerTwo = new Player({id: socket.id, playerId: 2});
@@ -62,12 +67,18 @@ io.on('connection', function(socket){
     // console.log('in server from client')
     io.emit('position update', position);
   });
+
+  socket.on('register damage', function(n){
+    console.log("REGISTER DAMAGE SERVER")
+    console.log(socket.room)
+    io.emit('register damage', n)
+  })
 });
 
 
 
 
-http.listen(3000, '192.168.1.75', function(){
+http.listen(3000, '192.168.1.13', function(){
 
   console.log('listening on http://192.168.1.13:3000');
 });
