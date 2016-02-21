@@ -30,7 +30,7 @@ io.on('connection', function(socket){
 
     // Check if there's a gameRoom with only one player in it
     for (var i = 0; i < gameRooms.length; i++) {
-      if (gameRooms[i].players.length === 1) {
+      if (gameRooms[i].players.length === 1 && gameRooms[i].players[0] !== socket.id) {
         // Join a room with a player and start game
         console.log("here")
         gameRooms[i].players.push(socket.id)
@@ -47,6 +47,7 @@ io.on('connection', function(socket){
         console.log("!!!!MAKE NEW ROOM!!!!")
         makeNewRoom(socket)
         console.log(gameRooms)
+        break
       }
     }
     if (gameRooms.length === 0) {
@@ -57,8 +58,8 @@ io.on('connection', function(socket){
   });
 
   socket.on('position update', function(position){
-    console.log(position)
-    console.log('in server from client')
+    // console.log(position)
+    // console.log('in server from client')
     io.emit('position update', position);
   });
 });

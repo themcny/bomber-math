@@ -29,7 +29,6 @@ function newQuestion() {
 
 
 $('form').submit(function(){
-  console.log('form here')
   socket.emit('answer submit', $('m').val());
   $('#m').val('');
   return false;
