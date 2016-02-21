@@ -8,7 +8,6 @@
 
   </head>
   <body>
-    <a href="/room" id="join-room">Join Room</a>
     <p><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></p>
     <div id="cannon-one"></div>
     <div id="cannon-two"></div>
@@ -16,7 +15,12 @@
     <progress id="onehealth" value="100" max="100"></progress>
     <progress id="twohealth" value="100" max="100"></progress>
     <script src="js/game.js"></script>
-
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="js/math_problem.js"></script>
+    <div id="quiz-question"></div>
     <script>
         var socket = io();
         $('#join-room').on('click', function(){
