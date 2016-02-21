@@ -1,4 +1,6 @@
 var quizQuestion;
+var socket = io();
+var player = 2;
 
 $(document).ready(function(){
   newQuestion();
@@ -23,11 +25,11 @@ function newQuestion() {
 }
 
 
-var socket = io();
+
 
 $('form').submit(function(){
   console.log('form here')
-  socket.emit('chat message', options);
+  socket.emit('answer submit', $('m').val());
   $('#m').val('');
   return false;
 });
@@ -37,7 +39,7 @@ $('form').submit(function(){
 //   console.log(playerTwo)
 // })
 
-var player = 2;
+
 
 if (player == 1){
   loopPlayerOne();
@@ -51,7 +53,7 @@ if (player == 1){
   var resetInt = setInterval(function() { reset(2) }, 10000);
 }
 
-socket.on('chat message', function(msg){
+socket.on('answer submit', function(msg){
 
   if (quizQuestion.answer === parseInt(msg)) {
     if(player == 1){
