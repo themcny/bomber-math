@@ -32,7 +32,7 @@ $('form').submit(function(){
 socket.on('chat message', function(msg){
 
   if (quizQuestion.answer === parseInt(msg)) {
-    startJump(4.0, -12.0);
+    startJump(6.0, -1000.0);
     endJump();
     damage('twohealth');
     $('#messages').append($('<li>').text("you win!"));

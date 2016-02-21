@@ -7,19 +7,35 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 
-#cannon {
+#cannon-one {
   position: fixed;
   left:10px;
-  height: 50px;
-  width: 50px;
+  height: 70px;
+  width: 30px;
   border: 1px solid green;
-  animation-name: tilt;
+  animation-name: tilt-one;
   animation-duration: 3s ;
   animation-interation-count: 1;
   animation-fill-mode: forwards;
 }
-@keyframes tilt {
+@keyframes tilt-one {
   0%{transform:rotate(0deg);}
   50%{transform:rotate(15deg);}
   100%{transform:rotate(30deg);}
+}
+#cannon-two {
+  position: fixed;
+  right:10px;
+  height: 70px;
+  width: 30px;
+  border: 1px solid green;
+  animation-name: tilt-two;
+  animation-duration: 3s ;
+  animation-interation-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes tilt-two {
+  0%{transform:rotate(0deg);}
+  50%{transform:rotate(-15deg);}
+  100%{transform:rotate(-30deg);}
 }
