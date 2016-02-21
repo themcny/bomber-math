@@ -8,11 +8,13 @@ var gravity = 0.1;
 var onGround = false;
 
 function reset(){
-  posX = 50.0;
-  posY = 550.0;
+  if (posY >= 500) {
+    posX = 50.0;
+    posY = 550.0;
+  }
 }
 
-var myVar = setInterval(function() { reset() }, 100000);
+var myVar = setInterval(function() { reset() }, 10000);
 
 loop();
 function startJump(vx, vy){
@@ -76,7 +78,7 @@ function render(){
 
 function damage(otherPlayer){
   playerHealth = document.getElementById(otherPlayer);
-  playerHealth.value = playerHealth.value - 50;
+  playerHealth.value = playerHealth.value - 20;
 }
 
 function checkWin(){
