@@ -1,3 +1,5 @@
+var quizQuestion;
+
 $(document).ready(function(){
   newQuestion();
 })
@@ -13,7 +15,7 @@ function Problem() {
   this.answer = this.number1 * this.number2;
 
 }
-var quizQuestion;
+
 
 function newQuestion() {
   quizQuestion = new Problem();
@@ -22,11 +24,18 @@ function newQuestion() {
 
 
 var socket = io();
+
 $('form').submit(function(){
-  socket.emit('chat message', $('#m').val());
+  console.log('form here')
+  socket.emit('chat message', options);
   $('#m').val('');
   return false;
 });
+
+socket.on('player update', function(playerOne, playerTwo) {
+  console.log(playerOne)
+  console.log(playerTwo)
+})
 
 var player = 2;
 
@@ -71,5 +80,6 @@ socket.on('chat message', function(msg){
   }
   newQuestion();
 });
+
 
 
