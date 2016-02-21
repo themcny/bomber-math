@@ -39,3 +39,7 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
   50%{transform:rotate(-15deg);}
   100%{transform:rotate(-30deg);}
 }
+
+#messages {
+  float: right;
+}

@@ -15,22 +15,8 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   var newComer = new Player({id: socket.id, playerId: 2});
-  players[socket.id] = newComer;
-  socket.player = newComer;
   socket.room = 'Lobby';
   socket.join('Lobby')
-  // console.log(newComer);
-
-  // if (io.sockets.adapter.rooms['Lobby'].length < 2){
-  //   var playerOne = newComer;
-  //   io.emit('player update', playerOne, playerTwo);
-  // } else if (io.sockets.adapter.rooms['Lobby'].length === 2){
-  //   var playerTwo = newComer;
-  //   io.emit('player update', playerOne, playerTwo);
-  // } else {
-  //   io.emit('player update', playerOne, playerTwo);
-  // }
-
 
   socket.on('answer submit', function(msg){
     console.log(msg);
@@ -50,11 +36,12 @@ io.on('connection', function(socket){
         gameRooms[i].players.push(socket.id)
         socket.room = gameRooms[i].roomId;
         socket.join(socket.room)
+        // Find the player already in the room and assign as playerOne
         var playerOneObj = io.sockets.adapter.rooms[socket.room].sockets;
         var playerOneId = Object.keys(playerOneObj)[1]
         var playerOne = new Player({id: playerOneId, playerId: 1})
-        var playerTwo = newComer;
-        // delete gameRooms[i]
+        // Find the new player and assign as playerTwo
+        var playerTwo = new Player({id: socket.id, playerId: 2});
         io.to(socket.room).emit('game start', playerOne, playerTwo);
       } else if (i === gameRooms.length - 1) {
         console.log("!!!!MAKE NEW ROOM!!!!")
