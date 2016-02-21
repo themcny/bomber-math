@@ -15,6 +15,7 @@ app.get('/', function(req, res){
 
 app.get('/room', function(req, res) {
   res.sendfile('room.html');
+
 });
 
 io.on('connection', function(socket){
