@@ -4,26 +4,23 @@
     <title>Socket.IO chat</title>
     <script src="socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
     <link rel="stylesheet" href="css/main.css">
 
   </head>
   <body>
-    <a href="/room" id="join-room">Join Room</a>
-    <p><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></p>
-    <div id="cannon-one"></div>
-    <div id="cannon-two"></div>
-    <br><br><br><br><br><br>
+    <p><canvas id="canvas" width="500" height="500"></p>
     <progress id="onehealth" value="100" max="100"></progress>
     <progress id="twohealth" value="100" max="100"></progress>
     <script src="js/game.js"></script>
 
-    <script>
-        var socket = io();
-        $('#join-room').on('click', function(){
-            socket.emit('join room');
 
-        })
-    </script>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="js/math_problem.js"></script>
+    <div id="quiz-question"></div>
 
   </body>
 </html>
