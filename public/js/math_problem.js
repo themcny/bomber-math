@@ -32,10 +32,10 @@ $('form').submit(function(){
   return false;
 });
 
-socket.on('player update', function(playerOne, playerTwo) {
-  console.log(playerOne)
-  console.log(playerTwo)
-})
+// socket.on('player update', function(playerOne, playerTwo) {
+//   console.log(playerOne)
+//   console.log(playerTwo)
+// })
 
 var player = 2;
 
