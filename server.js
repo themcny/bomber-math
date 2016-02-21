@@ -2,8 +2,8 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var playerOne, playerTwo;
-
+var players = {};
+var gameRooms = [];
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
@@ -11,9 +11,8 @@ app.get('/', function(req, res){
 });
 
 
-
 io.on('connection', function(socket){
-  var newComer = new Player({id: socket.id});
+  var newComer = new Player({id: socket.id, playerId: 2});
   players[socket.id] = newComer;
   socket.player = newComer;
   socket.room = 'Lobby';
@@ -37,36 +36,62 @@ io.on('connection', function(socket){
   });
 
   socket.on('join room', function(){
+    // Leave Lobby room
     var oldroom = socket.room;
-    socket.leave(oldroom)
-    socket.room = 'testroom';
-    socket.join('testroom')
-
-    if (io.sockets.adapter.rooms['testroom'].length === 2){
-      var playerOneObj = io.sockets.adapter.rooms['testroom'].sockets;
-      var playerOneId = Object.keys(playerOneObj)[0]
-
-      var playerOne = new Player({id: playerOneId})
-      var playerTwo = newComer;
-      io.to('testroom').emit('game start', playerOne, playerTwo);
-    } else {
-      // Create a new room / Wait for another player to join
-      // io.emit('player update', playerOne, playerTwo);
+    socket.leave(oldroom);
+    
+    // Check if there's a gameRoom with only one player in it
+    for (var i = 0; i < gameRooms.length; i++) {
+      if (gameRooms[i].players.length === 1) {
+        // Join a room with a player and start game
+        socket.room = gameRooms[i].roomId;
+        socket.join(socket.room)
+        var playerOneObj = io.sockets.adapter.rooms[socket.room].sockets;
+        var playerOneId = Object.keys(playerOneObj)[1]
+        var playerOne = new Player({id: playerOneId, playerId: 1})
+        var playerTwo = newComer;
+        io.to(socket.room).emit('game start', playerOne, playerTwo);
+        break;
+      } else if (gameRooms[i].players.length === 2) {
+        // nothing for now
+      } else {
+        // Make a new room, join it, and wait for an opponent
+        console.log("MAKE NEW ROOM")
+        makeNewRoom(socket)
+      }
     }
+
+    if (gameRooms.length === 0) {
+      makeNewRoom(socket)
+    }
+
   });
 });
 
 
-
-http.listen(3000, '192.168.1.82', function(){
+http.listen(3000, '192.168.1.13', function(){
   console.log('listening on http://192.168.1.13:3000');
 });
 
+function makeNewRoom(socket) {
+  var newRoomId = (Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000).toString()
+  var newRoom = new Room({id: newRoomId});
+  newRoom.players.push(socket.id)
+  gameRooms.push(newRoom);
+  socket.room = newRoom.roomId;
+  socket.join(newRoom.roomId);
+  io.to(socket.id).emit('waiting');
+}
 
+function Room(options) {
+  this.roomId = options.id;
+  this.players = []
+}
 
 function Player(options) {
   this.health = 10;
   this.id = options.id;
+  this.playerId = options.playerId;
 }
 
 
