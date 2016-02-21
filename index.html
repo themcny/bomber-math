@@ -19,6 +19,10 @@
     <div><h3 id='waiting'></h3></div>
 
     <div id='start-game' style="display: none">
+      <div id="quiz-question-1" style="display: none"></div>
+      <div id="quiz-question-2" style="display: none"></div>
+      <ul id="messages-1" style="display: none"></ul>
+      <ul id="messages-2" style="display: none"></ul>
       <p><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></p>
       <div id="cannon-one"></div>
       <div id="cannon-two"></div>
@@ -26,12 +30,16 @@
       <progress id="onehealth" value="100" max="100"></progress>
       <progress id="twohealth" value="100" max="100"></progress>
       <script src="js/game.js"></script>
-      <ul id="messages"></ul>
-      <form action="">
-        <input id="m" autocomplete="off" /><button>Send</button>
+
+      <form action="" id="player-1-input" style="display: none">
+        <input id="m1" autocomplete="off" /><button>Send</button>
       </form>
+
+      <form action="" id="player-2-input" style="display: none">
+        <input id="m2" autocomplete="off" /><button>Send</button>
+      </form>
+
       <script src="js/math_problem.js"></script>
-      <div id="quiz-question"></div>
     </div>
     <script>
       var socket = io();
@@ -43,6 +51,16 @@
         $('#waiting').text('');
         $('#join-room').hide();
         $('#start-game').show();
+        var thisId = "/#" + socket.id
+        if (thisId == playerOne.id) {
+          $('#player-1-input').show();
+          $('#quiz-question-1').show();
+          $('#messages-1').show();
+        } else if (thisId == playerTwo.id) {
+          $('#player-2-input').show();
+          $('#quiz-question-2').show();
+          $('#messages-2').show();
+        }
       });
     </script>
   </body>
