@@ -58,8 +58,15 @@ socket.on('chat message', function(msg){
     }
     $('#messages').append($('<li>').text("you win!"));
   } else {
-    startJump(-5.0, 4.0);
-    endJump();
+    if(player == 1){
+      // for player 1
+      startJump(4.0, -500.0);
+      endJump();
+    } else if (player == 2){
+      // for player 2
+      startJump(-4.0, -500.0);
+      endJump();
+    }
     $('#messages').append($('<li>').text("you lose!"));
   }
   newQuestion();
