@@ -62,7 +62,7 @@ function update(){
     onGround = true;
   }
   // send data to server for client position
-  socket.emit('position update', "hello");
+  socket.emit('position update', {posX: posX, posY: posY});
 }
 
 socket.on('position update', function(msg){

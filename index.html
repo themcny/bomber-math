@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Bomber Math</title>
     <script src="socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <link rel="stylesheet" href="css/main.css">
@@ -16,6 +16,7 @@
           socket.emit('join room');
       })
     </script>
+    <div><h3 id='waiting'></h3></div>
 
     <div id='start-game' style="display: none">
       <p><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></p>
@@ -34,9 +35,15 @@
     </div>
     <script>
       var socket = io();
+      socket.on('waiting', function() {
+        $('#join-room').hide();
+        $('#waiting').text('Waiting for an opponent...');
+      });
       socket.on('game start', function(playerOne, playerTwo) {
+        $('#waiting').text('');
+        $('#join-room').hide();
         $('#start-game').show();
-      })
+      });
     </script>
   </body>
 </html>

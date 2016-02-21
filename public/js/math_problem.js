@@ -19,6 +19,7 @@ function Problem() {
 }
 
 
+
 function newQuestion() {
   quizQuestion = new Problem();
   $('#quiz-question').text(quizQuestion.question);
