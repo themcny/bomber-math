@@ -1,20 +1,28 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
-var posX = 50.0;
+// player 1
+// var posX = 50.0;
+// var posY = 550.0;
+
+//player 2
+var posX = 750.0;
 var posY = 550.0;
 var velX = 0.0;
 var velY = 0.0;
 var gravity = 0.1;
 var onGround = false;
 
-function reset(){
-  if (posY >= 500) {
+function reset(player){
+  if (posY >= 500 && player == 1) {
     posX = 50.0;
+    posY = 550.0;
+  }else if (posY >= 500 && player == 2){
+    posX = 750.0;
     posY = 550.0;
   }
 }
 
-var myVar = setInterval(function() { reset() }, 10000);
+var myVar = setInterval(function() { reset(2) }, 10000);
 
 loop();
 function startJump(vx, vy){
@@ -32,7 +40,7 @@ function endJump(){
   }
 }
 function loop(){
-  update(1);
+  update(2);
   render();
   checkWin();
   window.setTimeout(loop, 33 );
@@ -52,7 +60,7 @@ function update(player){
   } else if(player == 2){
     velY += gravity;
     posY += velY;
-    posX -= velX;
+    posX += velX;
     if(posY > 500.0){
       posY = 500.0;
       velY = 0.0;
