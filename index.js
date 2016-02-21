@@ -2,9 +2,9 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var lastPlayerId = 0;
 var players = {};
 var rooms = ['Lobby'];
+var playerOne, playerTwo;
 
 
 app.use(express.static(__dirname + '/public'));
@@ -13,35 +13,29 @@ app.get('/', function(req, res){
   res.sendfile('index.html');
 });
 
-app.get('/room', function(req, res) {
-  res.sendfile('room.html');
 
-});
 
 io.on('connection', function(socket){
-  var newComer = new Player({id: lastPlayerId});
-  players[lastPlayerId] = newComer;
+  var newComer = new Player({id: socket.id});
+  players[socket.id] = newComer;
   socket.player = newComer;
   socket.room = 'Lobby';
-  socket.join('Lobby')
-  lastPlayerId ++;
-  console.log(io.sockets.adapter.rooms['Lobby'].length)
+  socket.join('Lobby');
+
   if (io.sockets.adapter.rooms['Lobby'].length < 2){
     var playerOne = newComer;
-    console.log('player one set')
-    console.log(playerOne);
+    io.emit('player update', playerOne, playerTwo);
+
   } else if (io.sockets.adapter.rooms['Lobby'].length === 2){
     var playerTwo = newComer;
-    console.log('player two set');
-    console.log(playerTwo);
+    io.emit('player update', playerOne, playerTwo);
   } else {
-    console.log('spectator')
+    io.emit('player update', playerOne, playerTwo);
   }
-  // var clientNumber = io.sockets.adapter.rooms['Lobby'].length;
-  // console.log(newComer);
-  // console.log(clientNumber);
+
 
   socket.on('chat message', function(msg){
+    console.log(msg);
     io.emit('chat message', msg);
   });
   socket.on('join room', function(){
@@ -50,10 +44,6 @@ io.on('connection', function(socket){
     socket.leave(socket.room);
     socket.join('testroom');
     socket.room = 'testroom';
-    // console.log(oldroom);
-    // console.log(socket.room)
-    // console.log(clientNumber);
-
 
   });
 });
@@ -70,3 +60,5 @@ function Player(options) {
   this.health = 10;
   this.id = options.id;
 }
+
+
