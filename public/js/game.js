@@ -67,6 +67,8 @@ function update(){
 
 socket.on('position update', function(msg){
   console.log(msg);
+  posY = msg.posY;
+  posX = msg.posX;
   console.log('in client from server');
 });
 
