@@ -60,7 +60,7 @@ io.on('connection', function(socket){
     console.log(position)
     console.log('in server from client')
     io.emit('position update', position);
-  })
+  });
 });
 
 
