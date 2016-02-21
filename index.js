@@ -32,7 +32,7 @@ io.on('connection', function(socket){
     console.log(playerOne);
   } else if (io.sockets.adapter.rooms['Lobby'].length === 2){
     var playerTwo = newComer;
-    console.log('play one set');
+    console.log('player two set');
     console.log(playerTwo);
   } else {
     console.log('spectator')
