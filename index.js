@@ -2,10 +2,9 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var lastPlayerId = 0;
 var players = {};
 var rooms = ['Lobby'];
-var palyerOne, playerTwo;
+var playerOne, playerTwo;
 
 
 app.use(express.static(__dirname + '/public'));
@@ -17,12 +16,11 @@ app.get('/', function(req, res){
 
 
 io.on('connection', function(socket){
-  var newComer = new Player({id: lastPlayerId});
-  players[lastPlayerId] = newComer;
+  var newComer = new Player({id: socket.id});
+  players[socket.id] = newComer;
   socket.player = newComer;
   socket.room = 'Lobby';
-  socket.join('Lobby')
-  lastPlayerId ++;
+  socket.join('Lobby');
 
   if (io.sockets.adapter.rooms['Lobby'].length < 2){
     var playerOne = newComer;
@@ -46,10 +44,6 @@ io.on('connection', function(socket){
     socket.leave(socket.room);
     socket.join('testroom');
     socket.room = 'testroom';
-    // console.log(oldroom);
-    // console.log(socket.room)
-    // console.log(clientNumber);
-
 
   });
 });
