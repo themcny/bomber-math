@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
   newQuestion();
 })
@@ -71,5 +72,4 @@ socket.on('chat message', function(msg){
   }
   newQuestion();
 });
-
 

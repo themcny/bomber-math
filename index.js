@@ -25,6 +25,14 @@ io.on('connection', function(socket){
   socket.room = 'Lobby';
   socket.join('Lobby')
   lastPlayerId ++;
+  if (io.sockets.adapter.rooms['Lobby'].length < 2){
+    var playerTwo = newComer;
+    console.log(playerTwo);
+  } else{
+    var playerOne = newComer;
+    console.log('play one set');
+    console.log(playerOne);
+  }
   // var clientNumber = io.sockets.adapter.rooms['Lobby'].length;
   // console.log(newComer);
   // console.log(clientNumber);
@@ -58,4 +66,3 @@ function Player(options) {
   this.health = 10;
   this.id = options.id;
 }
-
