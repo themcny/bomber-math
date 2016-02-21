@@ -1,7 +1,7 @@
 {
-  "name": "socket-chat-example",
+  "name": "Bomber Math",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "math attack fools",
   "dependencies": {
     "express": "^4.10.2",
     "socket.io": "^1.4.5"

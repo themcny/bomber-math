@@ -1,5 +1,6 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
+var socket = io();
 // player 1
 // var posX = 50.0;
 // var posY = 550.0;
@@ -41,13 +42,11 @@ function endJump(){
 function loopPlayerTwo(){
   update();
   render();
-  checkWin();
   window.setTimeout(loopPlayerTwo, 33 );
 }
 function loopPlayerOne(){
   update();
   render();
-  checkWin();
   window.setTimeout(loopPlayerOne, 33 );
 }
 function update(){
@@ -60,7 +59,16 @@ function update(){
     velX = 0.0;
     onGround = true;
   }
+  // send data to server for client position
+  socket.emit('position update', {posX: posX, posY: posY});
 }
+
+socket.on('position update', function(msg){
+  // console.log(msg);
+  posY = msg.posY;
+  posX = msg.posX;
+  // console.log('in client from server');
+});
 
 function render(){
   ctx.clearRect(0, 0, 800, 500);
@@ -84,8 +92,12 @@ function damage(otherPlayer){
 function checkWin(){
   onehealth = parseInt(document.getElementById('onehealth').value)
   twohealth = parseInt(document.getElementById('twohealth').value)
-  if(onehealth <= 0 || twohealth <= 0){
-    if(alert('Game Over')){}
-    else    window.location.reload();
+  if (onehealth <= 0) {
+    $('#outcome').text("Player 2 Wins!")
+  } else if (twohealth <= 0) {
+    $('#outcome').text("Player 1 Wins!")
   }
 }
+
+
+
