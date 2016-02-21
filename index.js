@@ -34,9 +34,9 @@ io.on('connection', function(socket){
   }
 
 
-  socket.on('chat message', function(msg){
+  socket.on('answer submit', function(msg){
     console.log(msg);
-    io.emit('chat message', msg);
+    io.emit('answer submit', msg);
   });
   socket.on('join room', function(){
     var oldroom;
@@ -44,8 +44,12 @@ io.on('connection', function(socket){
     socket.leave(socket.room);
     socket.join('testroom');
     socket.room = 'testroom';
-
   });
+  socket.on('position update', function(position){
+    console.log(position)
+    console.log('in server from client')
+    io.emit('position update', position);
+  })
 });
 
 

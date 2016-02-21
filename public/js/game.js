@@ -1,5 +1,6 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
+var socket = io();
 // player 1
 // var posX = 50.0;
 // var posY = 550.0;
@@ -60,7 +61,14 @@ function update(){
     velX = 0.0;
     onGround = true;
   }
+  // send data to server for client position
+  socket.emit('position update', "hello");
 }
+
+socket.on('position update', function(msg){
+  console.log(msg);
+  console.log('in client from server');
+});
 
 function render(){
   ctx.clearRect(0, 0, 800, 500);
@@ -89,3 +97,6 @@ function checkWin(){
     else    window.location.reload();
   }
 }
+
+
+
