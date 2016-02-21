@@ -8,6 +8,7 @@
 
   </head>
   <body>
+    <button id='join-room'>Join Room</button>
     <p><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></p>
     <div id="cannon-one"></div>
     <div id="cannon-two"></div>
@@ -25,7 +26,6 @@
         var socket = io();
         $('#join-room').on('click', function(){
             socket.emit('join room');
-
         })
     </script>
 

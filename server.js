@@ -34,7 +34,6 @@ io.on('connection', function(socket){
     io.emit('player update', playerOne, playerTwo);
   }
 
->>>>>>> b776c359301163b0f5d4e3f6878b8c8431722814:index.js
 
   socket.on('chat message', function(msg){
     console.log(msg);
@@ -43,20 +42,15 @@ io.on('connection', function(socket){
   socket.on('join room', function(){
     var oldroom;
     oldroom = socket.room;
-    leave('Lobby')
+    socket.leave('Lobby')
     socket.room = 'testroom';
-<<<<<<< HEAD:server.js
-    join('testroom')
-    // var clients = io.sockets.adapter.rooms['testroom'];
-=======
-
->>>>>>> b776c359301163b0f5d4e3f6878b8c8431722814:index.js
+    socket.join('testroom')
   });
 });
 
 
 
-http.listen(3000, '192.168.1.13', function(){
+http.listen(3000, '192.168.1.82', function(){
   console.log('listening on http://192.168.1.13:3000');
 });
 
