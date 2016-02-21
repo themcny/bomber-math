@@ -77,12 +77,10 @@ io.on('connection', function(socket){
 });
 
 
-<<<<<<< HEAD
+
 
 http.listen(3000, '192.168.1.75', function(){
-=======
-http.listen(3000, '192.168.1.13', function(){
->>>>>>> 98887a61ec7848581c05fcb4c210a9231e43e7f2
+
   console.log('listening on http://192.168.1.13:3000');
 });
 
