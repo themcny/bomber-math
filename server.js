@@ -3,6 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var playerOne, playerTwo;
+var players = {}
 
 app.use(express.static(__dirname + '/public'));
 
@@ -31,9 +32,9 @@ io.on('connection', function(socket){
   // }
 
 
-  socket.on('chat message', function(msg){
+  socket.on('answer submit', function(msg){
     console.log(msg);
-    io.emit('chat message', msg);
+    io.emit('answer submit', msg);
   });
 
   socket.on('join room', function(){
@@ -64,7 +65,7 @@ io.on('connection', function(socket){
 
 
 
-http.listen(3000, '192.168.1.82', function(){
+http.listen(3000, '192.168.1.75', function(){
   console.log('listening on http://192.168.1.13:3000');
 });
 
