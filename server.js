@@ -44,24 +44,24 @@ io.on('connection', function(socket){
     for (var i = 0; i < gameRooms.length; i++) {
       if (gameRooms[i].players.length === 1) {
         // Join a room with a player and start game
+        console.log("here")
+        gameRooms[i].players.push(socket.id)
         socket.room = gameRooms[i].roomId;
         socket.join(socket.room)
         var playerOneObj = io.sockets.adapter.rooms[socket.room].sockets;
         var playerOneId = Object.keys(playerOneObj)[1]
         var playerOne = new Player({id: playerOneId, playerId: 1})
         var playerTwo = newComer;
+        // delete gameRooms[i]
         io.to(socket.room).emit('game start', playerOne, playerTwo);
-        break;
-      } else if (gameRooms[i].players.length === 2) {
-        // nothing for now
-      } else {
-        // Make a new room, join it, and wait for an opponent
-        console.log("MAKE NEW ROOM")
+      } else if (i === gameRooms.length - 1) {
+        console.log("!!!!MAKE NEW ROOM!!!!")
         makeNewRoom(socket)
+        console.log(gameRooms)
       }
     }
-
     if (gameRooms.length === 0) {
+      console.log("####MAKE NEW ROOM####")
       makeNewRoom(socket)
     }
 
