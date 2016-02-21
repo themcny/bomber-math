@@ -25,7 +25,7 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 }
 #cannon-two {
   position: fixed;
-  right:10px;
+  left:790px;
   height: 70px;
   width: 30px;
   border: 1px solid green;
