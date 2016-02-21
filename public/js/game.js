@@ -5,8 +5,9 @@ var ctx = canvas.getContext('2d');
 // var posY = 550.0;
 
 //player 2
-var posX = 750.0;
-var posY = 550.0;
+// var posX = 750.0;
+// var posY = 550.0;
+
 var velX = 0.0;
 var velY = 0.0;
 var gravity = 0.1;
@@ -22,9 +23,7 @@ function reset(player){
   }
 }
 
-var myVar = setInterval(function() { reset(2) }, 10000);
 
-loop();
 function startJump(vx, vy){
   console.log('startJump')
   if(onGround){
@@ -39,37 +38,30 @@ function endJump(){
     velY = -6.0;
   }
 }
-function loop(){
-  update(2);
+function loopPlayerTwo(){
+  update();
   render();
   checkWin();
-  window.setTimeout(loop, 33 );
+  window.setTimeout(loopPlayerTwo, 33 );
 }
-function update(player){
-  if (player == 1){
-    console.log('player one')
-    velY += gravity;
-    posY += velY;
-    posX += velX;
-    if(posY > 500.0){
-      posY = 500.0;
-      velY = 0.0;
-      velX = 0.0;
-      onGround = true;
-    }
-  } else if(player == 2){
-    velY += gravity;
-    posY += velY;
-    posX += velX;
-    if(posY > 500.0){
-      posY = 500.0;
-      velY = 0.0;
-      velX = 0.0;
-      onGround = true;
-    }
+function loopPlayerOne(){
+  update();
+  render();
+  checkWin();
+  window.setTimeout(loopPlayerOne, 33 );
+}
+function update(){
+  velY += gravity;
+  posY += velY;
+  posX += velX;
+  if(posY > 500.0){
+    posY = 500.0;
+    velY = 0.0;
+    velX = 0.0;
+    onGround = true;
   }
-
 }
+
 function render(){
   ctx.clearRect(0, 0, 800, 500);
   ctx.beginPath();
