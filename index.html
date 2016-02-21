@@ -4,64 +4,56 @@
     <title>Bomber Math</title>
     <script src="socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 
   </head>
   <body>
-
-    <button id='join-room'>Join Room</button>
+  <div class="landing">
+    <h1>Bomber Math</h1>
+    <button id='join-room' class='btn btn-success'>Start Game</button>
     <script>
       var socket = io();
       $('#join-room').on('click', function(){
           socket.emit('join room');
       })
     </script>
+  </div>
+
+
+
+  <div class="game">
     <div><h3 id='waiting'></h3></div>
+    <div id="player-name"></div>
+    <div id="outcome"></div>
 
-    <div id='start-game' style="display: none">
-      <div id="quiz-question-1" style="display: none"></div>
-      <div id="quiz-question-2" style="display: none"></div>
-      <ul id="messages-1" style="display: none"></ul>
-      <ul id="messages-2" style="display: none"></ul>
-      <p><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></p>
-      <div id="cannon-one"></div>
-      <div id="cannon-two"></div>
-      <br><br><br><br><br><br>
-      <progress id="onehealth" value="100" max="100"></progress>
-      <progress id="twohealth" value="100" max="100"></progress>
-      <script src="js/game.js"></script>
+    <div id='start-game' class='hidden'>
+      <ul id="messages-1" class='hidden'></ul>
+      <ul id="messages-2" class='hidden'></ul>
+      <div class="text-center container">
+        <div><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></div>
+        <div class="row">
+          <div id="cannon-one" class='col-sm-2 col-sm-offset-2'></div>
+          <div id="quiz-question-1" class='hidden col-sm-offset-6'></div>
+          <div id="quiz-question-2" class='hidden col-sm-offset-6'></div>
+          <div id="cannon-two" class='col-sm-2 col-sm-offset-8'></div>
+        </div>
+        <br><br><br><br><br><br>
+        <progress id="onehealth" value="100" max="100"></progress>
+        <progress id="twohealth" value="100" max="100"></progress>
+        <script src="js/game.js"></script>
+      </div>
 
-      <form action="" id="player-1-input" style="display: none">
+      <form action="" id="player-1-input" class='hidden'>
         <input id="m1" autocomplete="off" /><button>Send</button>
       </form>
 
-      <form action="" id="player-2-input" style="display: none">
+      <form action="" id="player-2-input" class='hidden'>
         <input id="m2" autocomplete="off" /><button>Send</button>
       </form>
 
       <script src="js/math_problem.js"></script>
     </div>
-    <script>
-      var socket = io();
-      socket.on('waiting', function() {
-        $('#join-room').hide();
-        $('#waiting').text('Waiting for an opponent...');
-      });
-      socket.on('game start', function(playerOne, playerTwo) {
-        $('#waiting').text('');
-        $('#join-room').hide();
-        $('#start-game').show();
-        var thisId = "/#" + socket.id
-        if (thisId == playerOne.id) {
-          $('#player-1-input').show();
-          $('#quiz-question-1').show();
-          $('#messages-1').show();
-        } else if (thisId == playerTwo.id) {
-          $('#player-2-input').show();
-          $('#quiz-question-2').show();
-          $('#messages-2').show();
-        }
-      });
-    </script>
+  </div>
   </body>
 </html>

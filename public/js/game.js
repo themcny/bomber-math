@@ -42,13 +42,11 @@ function endJump(){
 function loopPlayerTwo(){
   update();
   render();
-  checkWin();
   window.setTimeout(loopPlayerTwo, 33 );
 }
 function loopPlayerOne(){
   update();
   render();
-  checkWin();
   window.setTimeout(loopPlayerOne, 33 );
 }
 function update(){
@@ -94,9 +92,10 @@ function damage(otherPlayer){
 function checkWin(){
   onehealth = parseInt(document.getElementById('onehealth').value)
   twohealth = parseInt(document.getElementById('twohealth').value)
-  if(onehealth <= 0 || twohealth <= 0){
-    if(alert('Game Over')){}
-    else    window.location.reload();
+  if (onehealth <= 0) {
+    $('#outcome').text("Player 2 Wins!")
+  } else if (twohealth <= 0) {
+    $('#outcome').text("Player 1 Wins!")
   }
 }
 
