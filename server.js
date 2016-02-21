@@ -6,7 +6,6 @@ var lastPlayerId = 0;
 var players = {};
 var rooms = ['Lobby'];
 
-
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
@@ -25,9 +24,7 @@ io.on('connection', function(socket){
   socket.room = 'Lobby';
   socket.join('Lobby')
   lastPlayerId ++;
-  // var clientNumber = io.sockets.adapter.rooms['Lobby'].length;
   // console.log(newComer);
-  // console.log(clientNumber);
 
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
@@ -35,21 +32,17 @@ io.on('connection', function(socket){
   socket.on('join room', function(){
     var oldroom;
     oldroom = socket.room;
-    socket.leave(socket.room);
-    socket.join('testroom');
+    leave('Lobby')
     socket.room = 'testroom';
-    // console.log(oldroom);
-    // console.log(socket.room)
-    // console.log(clientNumber);
-
-
+    join('testroom')
+    // var clients = io.sockets.adapter.rooms['testroom'];
   });
 });
 
 
 
-http.listen(3000, function(){
-  console.log('listening on http://192.168.1.75:3000');
+http.listen(3000, '192.168.1.13', function(){
+  console.log('listening on http://192.168.1.13:3000');
 });
 
 
