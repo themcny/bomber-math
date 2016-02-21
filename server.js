@@ -2,8 +2,6 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var players = {};
-var rooms = ['Lobby'];
 var playerOne, playerTwo;
 
 app.use(express.static(__dirname + '/public'));
@@ -52,6 +50,7 @@ io.on('connection', function(socket){
       var playerTwo = newComer;
       io.to('testroom').emit('game start', playerOne, playerTwo);
     } else {
+      // Create a new room / Wait for another player to join
       // io.emit('player update', playerOne, playerTwo);
     }
   });
