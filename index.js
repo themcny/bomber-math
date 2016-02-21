@@ -9,7 +9,7 @@ var players = {};
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
-  res.sendFile('index.html');
+  res.sendfile('index.html');
 });
 
 io.on('connection', function(socket){

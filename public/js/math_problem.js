@@ -28,13 +28,34 @@ $('form').submit(function(){
   return false;
 });
 
+var player = 2;
+
+if (player == 1){
+  loopPlayerOne();
+  var posX = 50.0;
+  var posY = 550.0;
+  var resetInt = setInterval(function() { reset(1) }, 10000);
+} else if (player == 2){
+  loopPlayerTwo();
+  var posX = 750.0;
+  var posY = 550.0;
+  var resetInt = setInterval(function() { reset(2) }, 10000);
+}
 
 socket.on('chat message', function(msg){
 
   if (quizQuestion.answer === parseInt(msg)) {
-    startJump(4.0, -12.0);
-    endJump();
-    damage('twohealth');
+    if(player == 1){
+      // for player 1
+      startJump(6.0, -1000.0);
+      endJump();
+      damage('twohealth');
+    } else if (player == 2){
+      // for player 2
+      startJump(-6.0, -1000.0);
+      endJump();
+      damage('onehealth');
+    }
     $('#messages').append($('<li>').text("you win!"));
   } else {
     startJump(-5.0, 4.0);
