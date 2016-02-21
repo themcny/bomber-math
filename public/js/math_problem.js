@@ -32,9 +32,16 @@ $('form').submit(function(){
 socket.on('chat message', function(msg){
 
   if (quizQuestion.answer === parseInt(msg)) {
-    startJump(6.0, -1000.0);
+    // for player 1
+    // startJump(6.0, -1000.0);
+    // endJump();
+    // damage('twohealth');
+
+
+    // for player 2
+    startJump(-6.0, -1000.0);
     endJump();
-    damage('twohealth');
+    damage('onehealth');
     $('#messages').append($('<li>').text("you win!"));
   } else {
     startJump(-5.0, 4.0);
