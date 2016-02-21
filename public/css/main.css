@@ -9,8 +9,6 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #quiz-question-1, #quiz-question-2 { float: right; }
 
 #cannon-one {
-  position: fixed;
-  left:10px;
   height: 70px;
   width: 30px;
   border: 1px solid green;
@@ -25,8 +23,6 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
   100%{transform:rotate(30deg);}
 }
 #cannon-two {
-  position: fixed;
-  left:790px;
   height: 70px;
   width: 30px;
   border: 1px solid green;
