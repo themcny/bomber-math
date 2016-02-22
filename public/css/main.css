@@ -31,7 +31,7 @@ form button {
 #messages-1, #messages-2 li {
   padding: 5px 10px;
 }
-#messages-1, #messages-2 li:nth-child(odd) {
+#messages-1 li:nth-child(odd), #messages-2 li:nth-child(odd) {
   background: #eee;
 }
 
@@ -41,8 +41,8 @@ form button {
   background-image: url("../img/backdrop.png");
   background-repeat: no-repeat;
 }
-.backdrop img {
-  margin-top: 42%;
+#tank1, #tank2 {
+  margin-top: 44%;
   height: 25%;
   width:25%;
 }
