@@ -10,32 +10,32 @@ function checkWin(){
   twohealth = parseInt(document.getElementById('twohealth').value)
   if (onehealth <= 0) {
     $('#outcome').text("Player 2 Wins!")
-    $('#cannon-one').effect("explode");
-    setTimeout(function() {
-      $('.landing').removeClass('hidden');
-      $('.game').addClass('hidden');
-    }, 3000);
-
+    $('#tank1').fadeOut('slow');
+    resetPage();
   } else if (twohealth <= 0) {
     $('#outcome').text("Player 1 Wins!")
-    $('#cannon-two').effect("explode");
-    setTimeout(function() {
-      $('.landing').removeClass('hidden');
-      $('.game').addClass('hidden');
-    }, 3000);
-
+    $('#tank2').fadeOut('slow');
+    resetPage();
   }
+}
 
+function resetPage(){
+  setTimeout(function() {
+    $('#landing').removeClass('hidden');
+    $('#game').addClass('hidden');
+  }, 4000);
 }
 
 
 ///////////////////////
-// Socket Events     //
+//   Socket Events   //
 ///////////////////////
 
 socket.on('answer submit p1', function(msg){
   if (quizQuestion1.answer === parseInt(msg)) {
     socket.emit('register damage', 2)
+    $('#ball-one').addClass("ball-one-animation");
+    setTimeout(function() { $('#ball-one').removeClass("ball-one-animation")}, 1000)
     $('#messages-1').append($('<li>').text("Correct!"));
   } else {
     $('#messages-1').append($('<li>').text("Incorrect"));
@@ -46,6 +46,8 @@ socket.on('answer submit p1', function(msg){
 socket.on('answer submit p2', function(msg){
   if (quizQuestion2.answer === parseInt(msg)) {
     socket.emit('register damage', 1)
+    $('#ball-two').addClass("ball-two-animation")
+    setTimeout(function() { $('#ball-two').removeClass("ball-two-animation"); console.log('removed')}, 1000)
     $('#messages-2').append($('<li>').text("Correct!"));
   } else {
     $('#messages-2').append($('<li>').text("Incorrect"));
@@ -53,30 +55,46 @@ socket.on('answer submit p2', function(msg){
   playerTwoQuestion();
 });
 
+// Replacement shake effect
+function shake(div){
+  var interval = 80;                                      
+  var distance = 7;                                      
+  var times = 4;
+  $(div).css('position','relative');
+  for(var iter=0;iter<(times+1);iter++){
+      $(div).animate({
+        left:((iter%2==0 ? distance : distance*-1))
+      },interval);                                   
+  }
+  $(div).animate({ left: 0},interval);                                        
+}
+
 socket.on('register damage', function(n) {
   if (n == 1) {
     damage('onehealth');
-    $('#cannon-one').effect( "shake", {times:3}, 500 );
+    $('#ball-one').addClass("cannon-ball-animation");
+    shake($('#tank1'));
     checkWin();
   }
   if (n == 2) {
     damage('twohealth')
-    $('#cannon-two').effect( "shake", {times:3}, 500 );
+    $('#ball-two').addClass("cannon-ball-animation");
+    shake($('#tank2'));
     checkWin();
   };
 });
 
 // when one player is in a room waiting for an opponent after hitting ready
 socket.on('waiting', function() {
-  $('.landing').addClass('hidden');
+  $('#landing').addClass('hidden');
   $('#waiting').text('Waiting for an opponent...');
 });
 
 // when two players have hit ready, game begins
 socket.on('game start', function(playerOne, playerTwo) {
   $('#waiting').text('');
-  $('.landing').addClass('hidden');
-  $('.game').removeClass('hidden');
+  $('#landing').addClass('hidden');
+  $('#game').removeClass('hidden');
   $('#start-game').removeClass('hidden');
   var thisId = "/#" + socket.id
   if (thisId == playerOne.id) {
@@ -95,3 +113,4 @@ socket.on('game start', function(playerOne, playerTwo) {
 $('#join-room').on('click', function(){
     socket.emit('join room');
 })
+
