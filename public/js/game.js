@@ -39,7 +39,9 @@ socket.on('answer submit p1', function(msg){
     $('#messages-1').append($('<li>').text("Correct!"));
   } else {
     $('#messages-1').append($('<li>').text("Incorrect"));
-  }
+  };
+  var sHeight = $('#messages-1')[0].scrollHeight;
+  $('#messages-1').scrollTop(sHeight);
   playerOneQuestion();
 });
 
@@ -52,6 +54,8 @@ socket.on('answer submit p2', function(msg){
   } else {
     $('#messages-2').append($('<li>').text("Incorrect"));
   }
+  var sHeight = $('#messages-2')[0].scrollHeight;
+  $('#messages-2').scrollTop(sHeight);
   playerTwoQuestion();
 });
 

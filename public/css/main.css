@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 body {
-  font: 13px Helvetica, Arial;
+  font-family: 'Share Tech Mono';
+  font-size: 2em;
 }
 
 form {
@@ -15,18 +16,28 @@ form {
 form input {
   border: 0;
   padding: 10px;
-  width: 90%;
+  width: 85%;
   margin-right: .5%;
 }
 form button {
-  width: 9%;
+  width: 13%;
+}
+
+#join-room {
+  font-size: 2em;
+  margin-top: 1em;
+}
+
+#player-name {
+  margin-top: 10%;
 }
 
 #messages-1, #messages-2 {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  float: right;
+  max-height: 440px;
+  overflow: auto;
 }
 #messages-1, #messages-2 li {
   padding: 5px 10px;
