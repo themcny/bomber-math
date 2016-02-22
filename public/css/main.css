@@ -41,8 +41,8 @@ form button {
   background-image: url("../img/backdrop.png");
   background-repeat: no-repeat;
 }
-.backdrop img {
-  margin-top: 42%;
+#tank1, #tank2 {
+  margin-top: 44%;
   height: 25%;
   width:25%;
 }
