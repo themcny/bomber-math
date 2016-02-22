@@ -4,6 +4,7 @@
     <title>Bomber Math</title>
     <script src="socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 
@@ -29,13 +30,17 @@
         <div><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></div>
         <div class="row">
           <div id="cannon-one" class='col-sm-2 col-sm-offset-2'></div>
-          <div id="quiz-question-1" class='hidden col-sm-offset-6'></div>
-          <div id="quiz-question-2" class='hidden col-sm-offset-6'></div>
-          <div id="cannon-two" class='col-sm-2 col-sm-offset-8'></div>
+          <div id="cannon-two" class='col-sm-2 col-sm-offset-7'></div>
         </div>
-        <br><br><br><br><br><br>
-        <progress id="onehealth" value="100" max="100"></progress>
-        <progress id="twohealth" value="100" max="100"></progress>
+
+        <div class="row">
+            <div id="quiz-question-1" class='hidden'></div>
+            <div id="quiz-question-2" class='hidden'></div>
+        </div>
+        <div class="row text-center">
+            <progress id="onehealth" value="100" max="100"></progress>
+            <progress id="twohealth" value="100" max="100"></progress>
+        </div>
 
       </div>
 

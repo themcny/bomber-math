@@ -19,12 +19,10 @@ io.on('connection', function(socket){
   socket.join('Lobby')
 
   socket.on('answer submit p1', function(msg){
-    console.log(msg);
     io.emit('answer submit p1', msg);
   });
 
   socket.on('answer submit p2', function(msg){
-    console.log(msg);
     io.emit('answer submit p2', msg);
   });
 
@@ -49,9 +47,7 @@ io.on('connection', function(socket){
         var playerTwo = new Player({id: socket.id, playerId: 2});
         io.to(socket.room).emit('game start', playerOne, playerTwo);
       } else if (i === gameRooms.length - 1) {
-        console.log("!!!!MAKE NEW ROOM!!!!")
         makeNewRoom(socket)
-        console.log(gameRooms)
         break
       }
     }

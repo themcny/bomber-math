@@ -27,7 +27,7 @@ function reset(player){
 function gameLoop(){
   update();
   render();
-  window.setTimeout(loopPlayerOne, 33 );
+  window.setTimeout(gameLoop, 33 );
 }
 
 function startJump(vx, vy){
@@ -135,10 +135,12 @@ socket.on('answer submit p2', function(msg){
 socket.on('register damage', function(n) {
   if (n == 1) {
     damage('onehealth');
+    $('#cannon-one').effect( "shake", {times:3}, 500 );
     checkWin();
   }
   if (n == 2) {
     damage('twohealth')
+    $('#cannon-two').effect( "shake", {times:3}, 500 );
     checkWin();
   };
 });
