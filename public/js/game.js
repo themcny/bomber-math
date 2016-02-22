@@ -10,22 +10,20 @@ function checkWin(){
   twohealth = parseInt(document.getElementById('twohealth').value)
   if (onehealth <= 0) {
     $('#outcome').text("Player 2 Wins!")
-    $('#cannon-one').effect("explode");
-    setTimeout(function() {
-      $('.landing').removeClass('hidden');
-      $('.game').addClass('hidden');
-    }, 3000);
-
+    $('#tank1').effect("explode");
+    resetPage();
   } else if (twohealth <= 0) {
     $('#outcome').text("Player 1 Wins!")
-    $('#cannon-two').effect("explode");
-    setTimeout(function() {
-      $('.landing').removeClass('hidden');
-      $('.game').addClass('hidden');
-    }, 3000);
-
+    $('#tank2').effect("explode");
+    resetPage();
   }
+}
 
+function resetPage(){
+  setTimeout(function() {
+    $('#landing').removeClass('hidden');
+    $('#game').addClass('hidden');
+  }, 3000);
 }
 
 
@@ -57,38 +55,38 @@ socket.on('register damage', function(n) {
   if (n == 1) {
     damage('onehealth');
     $('#ball-one').addClass("cannon-ball-animation");
-    $('#cannon-one').effect( "shake", {times:3}, 500 );
+    $('#tank1').effect( "shake", {times:3}, 500 );
     checkWin();
   }
   if (n == 2) {
     damage('twohealth')
     $('#ball-two').addClass("cannon-ball-animation")
-    $('#cannon-two').effect( "shake", {times:3}, 500 );
+    $('#tank2').effect( "shake", {times:3}, 500 );
     checkWin();
   };
 });
 
 // when one player is in a room waiting for an opponent after hitting ready
 socket.on('waiting', function() {
-  $('.landing').addClass('hidden');
+  $('#landing').addClass('hidden');
   $('#waiting').text('Waiting for an opponent...');
 });
 
 // when two players have hit ready, game begins
 socket.on('game start', function(playerOne, playerTwo) {
   $('#waiting').text('');
-  $('.landing').addClass('hidden');
-  $('.game').removeClass('hidden');
+  $('#landing').addClass('hidden');
+  $('#game').removeClass('hidden');
   $('#start-game').removeClass('hidden');
   var thisId = "/#" + socket.id
   if (thisId == playerOne.id) {
     $('#player-name').text("Player 1")
-    $('#player-1-input').removeClass('hidden');
+    $('#player-1-input').removeClass('hidden').focus();
     $('#quiz-question-1').removeClass('hidden');
     $('#messages-1').removeClass('hidden');
   } else if (thisId == playerTwo.id) {
     $('#player-name').text("Player 2")
-    $('#player-2-input').removeClass('hidden');
+    $('#player-2-input').removeClass('hidden').focus();
     $('#quiz-question-2').removeClass('hidden');
     $('#messages-2').removeClass('hidden');
   }

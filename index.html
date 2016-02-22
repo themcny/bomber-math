@@ -10,7 +10,7 @@
 
   </head>
   <body>
-  <div class="landing">
+  <div id="landing" class="container">
     <h1>Bomber Math</h1>
     <button id='join-room' class='btn btn-success'>Start Game</button>
 
@@ -18,32 +18,30 @@
 
 
 
-  <div class="game" class='hidden'>
-    <div><h3 id='waiting'></h3></div>
-    <div id="player-name"></div>
-    <div id="outcome"></div>
+  <div><h3 id='waiting'></h3></div>
+  <div id="game" class='hidden'>
 
     <div id='start-game' class='hidden'>
-      <ul id="messages-1" class='hidden'></ul>
-      <ul id="messages-2" class='hidden'></ul>
-      <div class="text-center container">
-        <div>
-          <img src="img/backdrop.png">
-        </div>
+      <div class="container">
         <div id="ball-one" class="cannon-ball">O</div>
         <div id="ball-two" class="cannon-ball">O</div>
+
         <div class="row">
-          <div id="cannon-one" class='col-sm-2 col-sm-offset-2'></div>
-          <div id="cannon-two" class='col-sm-2 col-sm-offset-7'></div>
+          <div class='col-sm-6 backdrop'>
+            <img src="img/tank1.png" id='tank1' class='col-sm-2'>
+            <img src="img/tank2.png" id='tank2' class='col-sm-2 col-sm-offset-6'>
+            <progress id="onehealth" class='col-sm-3' value="100" max="100"></progress>
+            <progress id="twohealth" class='col-sm-3 col-sm-offset-6' value="100" max="100"></progress>
+          </div>
+          <h2 id="player-name" class='col-sm-2'></h2>
+          <ul id="messages-1" class='hidden col-sm-2'></ul>
+          <ul id="messages-2" class='hidden col-sm-2'></ul>
+          <div id="outcome" class='col-sm-2'></div>
         </div>
 
         <div class="row">
-            <div id="quiz-question-1" class='hidden'></div>
-            <div id="quiz-question-2" class='hidden'></div>
-        </div>
-        <div class="row text-center">
-            <progress id="onehealth" value="100" max="100"></progress>
-            <progress id="twohealth" value="100" max="100"></progress>
+            <h2 id="quiz-question-1" class='hidden col-sm-offset-4'></h2>
+            <h2 id="quiz-question-2" class='hidden col-sm-offset-4'></h2>
         </div>
 
       </div>
