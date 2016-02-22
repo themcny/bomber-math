@@ -3,8 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var players = {};
-var gameRooms = [];
+  var gameRooms = [];
 
 app.use(express.static(__dirname + '/public'));
 
@@ -19,12 +18,10 @@ io.on('connection', function(socket){
   socket.join('Lobby')
 
   socket.on('answer submit p1', function(msg){
-    console.log(msg);
     io.emit('answer submit p1', msg);
   });
 
   socket.on('answer submit p2', function(msg){
-    console.log(msg);
     io.emit('answer submit p2', msg);
   });
 
@@ -37,7 +34,7 @@ io.on('connection', function(socket){
     for (var i = 0; i < gameRooms.length; i++) {
       if (gameRooms[i].players.length === 1 && gameRooms[i].players[0] !== socket.id) {
         // Join a room with a player and start game
-        console.log("here")
+
         gameRooms[i].players.push(socket.id)
         socket.room = gameRooms[i].roomId;
         socket.join(socket.room)
@@ -49,37 +46,25 @@ io.on('connection', function(socket){
         var playerTwo = new Player({id: socket.id, playerId: 2});
         io.to(socket.room).emit('game start', playerOne, playerTwo);
       } else if (i === gameRooms.length - 1) {
-        console.log("!!!!MAKE NEW ROOM!!!!")
         makeNewRoom(socket)
-        console.log(gameRooms)
         break
       }
     }
     if (gameRooms.length === 0) {
-      console.log("####MAKE NEW ROOM####")
       makeNewRoom(socket)
     }
 
   });
 
-  socket.on('position update', function(position){
-    // console.log(position)
-    // console.log('in server from client')
-    io.emit('position update', position);
-  });
-
-  socket.on('register damage', function(n){
-    console.log("REGISTER DAMAGE SERVER")
-    console.log(socket.room)
-    io.emit('register damage', n)
+  socket.on('register damage', function(dmg){
+    io.to(socket.room).emit('register damage', dmg)
   })
 });
 
 
 
 
-http.listen(3000, '192.168.1.13', function(){
-
+http.listen(3000, function(){
   console.log('listening on http://192.168.1.13:3000');
 });
 

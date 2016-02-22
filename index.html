@@ -4,6 +4,7 @@
     <title>Bomber Math</title>
     <script src="socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 
@@ -12,12 +13,7 @@
   <div class="landing">
     <h1>Bomber Math</h1>
     <button id='join-room' class='btn btn-success'>Start Game</button>
-    <script>
-      var socket = io();
-      $('#join-room').on('click', function(){
-          socket.emit('join room');
-      })
-    </script>
+
   </div>
 
 
@@ -31,28 +27,35 @@
       <ul id="messages-1" class='hidden'></ul>
       <ul id="messages-2" class='hidden'></ul>
       <div class="text-center container">
-        <div><canvas id="canvas" width="800" height="500" style="border: 1px solid red"></div>
+        <div>
+          <img src="img/backdrop.png">
+        </div>
         <div class="row">
           <div id="cannon-one" class='col-sm-2 col-sm-offset-2'></div>
-          <div id="quiz-question-1" class='hidden col-sm-offset-6'></div>
-          <div id="quiz-question-2" class='hidden col-sm-offset-6'></div>
-          <div id="cannon-two" class='col-sm-2 col-sm-offset-8'></div>
+          <div id="cannon-two" class='col-sm-2 col-sm-offset-7'></div>
         </div>
-        <br><br><br><br><br><br>
-        <progress id="onehealth" value="100" max="100"></progress>
-        <progress id="twohealth" value="100" max="100"></progress>
-        <script src="js/game.js"></script>
+
+        <div class="row">
+            <div id="quiz-question-1" class='hidden'></div>
+            <div id="quiz-question-2" class='hidden'></div>
+        </div>
+        <div class="row text-center">
+            <progress id="onehealth" value="100" max="100"></progress>
+            <progress id="twohealth" value="100" max="100"></progress>
+        </div>
+
       </div>
 
-      <form action="" id="player-1-input" class='hidden'>
+      <form action="" id="player-1-input" class='hidden btn btn-default'>
         <input id="m1" autocomplete="off" /><button>Send</button>
       </form>
 
       <form action="" id="player-2-input" class='hidden'>
-        <input id="m2" autocomplete="off" /><button>Send</button>
+        <input id="m2" autocomplete="off" /><button class='btn btn-default'>Send</button>
       </form>
 
       <script src="js/math_problem.js"></script>
+      <script src="js/game.js"></script>
     </div>
   </div>
   </body>
