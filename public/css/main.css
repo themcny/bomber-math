@@ -31,7 +31,7 @@ form button {
 #messages-1, #messages-2 li {
   padding: 5px 10px;
 }
-#messages-1, #messages-2 li:nth-child(odd) {
+#messages-1 li:nth-child(odd), #messages-2 li:nth-child(odd) {
   background: #eee;
 }
 
