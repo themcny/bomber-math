@@ -41,6 +41,11 @@ form button {
   background-image: url("../img/backdrop.png");
   background-repeat: no-repeat;
 }
+.backdrop img {
+  margin-top: 42%;
+  height: 25%;
+  width:25%;
+}
 .cannon-ball{
   border:1px solid red;
   display:inline-block;
