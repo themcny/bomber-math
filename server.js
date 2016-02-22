@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-  var gameRooms = [];
+var gameRooms = [];
 
 app.use(express.static(__dirname + '/public'));
 
@@ -11,19 +11,14 @@ app.get('/', function(req, res){
   res.sendfile('index.html');
 });
 
+http.listen(3000, function(){
+  console.log('listening on port*:3000');
+});
 
 io.on('connection', function(socket){
   var newComer = new Player({id: socket.id, playerId: 2});
   socket.room = 'Lobby';
-  socket.join('Lobby')
-
-  socket.on('answer submit p1', function(msg){
-    io.emit('answer submit p1', msg);
-  });
-
-  socket.on('answer submit p2', function(msg){
-    io.emit('answer submit p2', msg);
-  });
+  socket.join('Lobby');
 
   socket.on('join room', function(){
     // Leave Lobby room
@@ -40,53 +35,59 @@ io.on('connection', function(socket){
         socket.join(socket.room)
         // Find the player already in the room and assign as playerOne
         var playerOneObj = io.sockets.adapter.rooms[socket.room].sockets;
-        var playerOneId = Object.keys(playerOneObj)[0]
+        var playerOneId = Object.keys(playerOneObj)[0].cleanId();
         var playerOne = new Player({id: playerOneId, playerId: 1})
         // Find the new player and assign as playerTwo
-        var playerTwo = new Player({id: socket.id, playerId: 2});
+        var playerTwo = new Player({id: socket.id.cleanId(), playerId: 2});
         io.to(socket.room).emit('game start', playerOne, playerTwo);
       } else if (i === gameRooms.length - 1) {
         makeNewRoom(socket)
-        break
-      }
-    }
+        break;
+      };
+    };
     if (gameRooms.length === 0) {
-      makeNewRoom(socket)
-    }
+      makeNewRoom(socket);
+    };
 
+  });
+
+  socket.on('answer submit p1', function(msg){
+    io.emit('answer submit p1', msg);
+  });
+
+  socket.on('answer submit p2', function(msg){
+    io.emit('answer submit p2', msg);
   });
 
   socket.on('register damage', function(dmg){
     io.to(socket.room).emit('register damage', dmg)
-  })
+  });
 });
 
 
-
-
-http.listen(3000, function(){
-  console.log('listening on http://192.168.1.13:3000');
-});
-
+// Set up a new instance of Room class and join room
 function makeNewRoom(socket) {
-  var newRoomId = (Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000).toString()
+  var newRoomId = (Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000).toString();
   var newRoom = new Room({id: newRoomId});
   newRoom.players.push(socket.id)
   gameRooms.push(newRoom);
   socket.room = newRoom.roomId;
   socket.join(newRoom.roomId);
   io.to(socket.id).emit('waiting');
-}
+};
+
+String.prototype.cleanId = function() {
+  return this.substring(2, this.length);
+};
 
 function Room(options) {
   this.roomId = options.id;
-  this.players = []
-}
+  this.players = [];
+};
 
 function Player(options) {
-  this.health = 10;
   this.id = options.id;
   this.playerId = options.playerId;
-}
+};
 
 
