@@ -10,11 +10,11 @@ function checkWin(){
   twohealth = parseInt(document.getElementById('twohealth').value)
   if (onehealth <= 0) {
     $('#outcome').text("Player 2 Wins!")
-    $('#tank1').effect("explode");
+    $('#tank1').fadeOut('slow');
     resetPage();
   } else if (twohealth <= 0) {
     $('#outcome').text("Player 1 Wins!")
-    $('#tank2').effect("explode");
+    $('#tank2').fadeOut('slow');
     resetPage();
   }
 }
@@ -23,12 +23,12 @@ function resetPage(){
   setTimeout(function() {
     $('#landing').removeClass('hidden');
     $('#game').addClass('hidden');
-  }, 3000);
+  }, 4000);
 }
 
 
 ///////////////////////
-// Socket Events     //
+//   Socket Events   //
 ///////////////////////
 
 socket.on('answer submit p1', function(msg){
@@ -56,15 +56,31 @@ socket.on('answer submit p2', function(msg){
   playerTwoQuestion();
 });
 
+// Replacement shake effect
+function shake(div){
+  var interval = 80;                                      
+  var distance = 7;                                      
+  var times = 4;
+  $(div).css('position','relative');
+  for(var iter=0;iter<(times+1);iter++){
+      $(div).animate({
+        left:((iter%2==0 ? distance : distance*-1))
+      },interval);                                   
+  }
+  $(div).animate({ left: 0},interval);                                        
+}
+
 socket.on('register damage', function(n) {
   if (n == 1) {
     damage('onehealth');
-    $('#tank1').effect( "shake", {times:3}, 500 );
+    $('#ball-one').addClass("cannon-ball-animation");
+    shake($('#tank1'));
     checkWin();
   }
   if (n == 2) {
     damage('twohealth')
-    $('#tank2').effect( "shake", {times:3}, 500 );
+    $('#ball-two').addClass("cannon-ball-animation");
+    shake($('#tank2'));
     checkWin();
   };
 });
@@ -84,12 +100,12 @@ socket.on('game start', function(playerOne, playerTwo) {
   var thisId = "/#" + socket.id
   if (thisId == playerOne.id) {
     $('#player-name').text("Player 1")
-    $('#player-1-input').removeClass('hidden').focus();
+    $('#player-1-input').removeClass('hidden');
     $('#quiz-question-1').removeClass('hidden');
     $('#messages-1').removeClass('hidden');
   } else if (thisId == playerTwo.id) {
     $('#player-name').text("Player 2")
-    $('#player-2-input').removeClass('hidden').focus();
+    $('#player-2-input').removeClass('hidden');
     $('#quiz-question-2').removeClass('hidden');
     $('#messages-2').removeClass('hidden');
   }
@@ -98,3 +114,4 @@ socket.on('game start', function(playerOne, playerTwo) {
 $('#join-room').on('click', function(){
     socket.emit('join room');
 })
+
