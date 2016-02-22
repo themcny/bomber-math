@@ -81,12 +81,12 @@ socket.on('game start', function(playerOne, playerTwo) {
   var thisId = "/#" + socket.id
   if (thisId == playerOne.id) {
     $('#player-name').text("Player 1")
-    $('#player-1-input').removeClass('hidden');
+    $('#player-1-input').removeClass('hidden').focus();
     $('#quiz-question-1').removeClass('hidden');
     $('#messages-1').removeClass('hidden');
   } else if (thisId == playerTwo.id) {
     $('#player-name').text("Player 2")
-    $('#player-2-input').removeClass('hidden');
+    $('#player-2-input').removeClass('hidden').focus();
     $('#quiz-question-2').removeClass('hidden');
     $('#messages-2').removeClass('hidden');
   }
