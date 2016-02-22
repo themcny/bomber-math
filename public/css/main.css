@@ -6,7 +6,6 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #messages-1, #messages-2 { list-style-type: none; margin: 0; padding: 0; float: right;}
 #messages-1, #messages-2 li { padding: 5px 10px; }
 #messages-1, #messages-2 li:nth-child(odd) { background: #eee; }
-#quiz-question-1, #quiz-question-2 { float: right; }
 
 #cannon-one {
   height: 70px;
