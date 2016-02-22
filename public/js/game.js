@@ -10,11 +10,11 @@ function checkWin(){
   twohealth = parseInt(document.getElementById('twohealth').value)
   if (onehealth <= 0) {
     $('#outcome').text("Player 2 Wins!")
-    $('#cannon-one').effect("explode");
+    $('#tank1').effect("explode");
     resetPage();
   } else if (twohealth <= 0) {
     $('#outcome').text("Player 1 Wins!")
-    $('#cannon-two').effect("explode");
+    $('#tank2').effect("explode");
     resetPage();
   }
 }
@@ -54,12 +54,12 @@ socket.on('answer submit p2', function(msg){
 socket.on('register damage', function(n) {
   if (n == 1) {
     damage('onehealth');
-    $('#cannon-one').effect( "shake", {times:3}, 500 );
+    $('#tank1').effect( "shake", {times:3}, 500 );
     checkWin();
   }
   if (n == 2) {
     damage('twohealth')
-    $('#cannon-two').effect( "shake", {times:3}, 500 );
+    $('#tank2').effect( "shake", {times:3}, 500 );
     checkWin();
   };
 });
@@ -79,12 +79,12 @@ socket.on('game start', function(playerOne, playerTwo) {
   var thisId = "/#" + socket.id
   if (thisId == playerOne.id) {
     $('#player-name').text("Player 1")
-    $('#player-1-input').removeClass('hidden');
+    $('#player-1-input').removeClass('hidden').focus();
     $('#quiz-question-1').removeClass('hidden');
     $('#messages-1').removeClass('hidden');
   } else if (thisId == playerTwo.id) {
     $('#player-name').text("Player 2")
-    $('#player-2-input').removeClass('hidden');
+    $('#player-2-input').removeClass('hidden').focus();
     $('#quiz-question-2').removeClass('hidden');
     $('#messages-2').removeClass('hidden');
   }

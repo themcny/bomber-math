@@ -42,5 +42,7 @@ form button {
   background-repeat: no-repeat;
 }
   .backdrop img {
-    margin-top: 50%;
+    margin-top: 42%;
+    height: 25%;
+    width: 25%;
   }
