@@ -97,7 +97,6 @@ socket.on('game start', function(playerOne, playerTwo) {
   $('#game').removeClass('hidden');
   $('#start-game').removeClass('hidden');
   var thisId = "/#" + socket.id
-  debugger
   if (thisId == playerOne.id) {
     $('#player-name').text("Player 1")
     $('#player-1-input').removeClass('hidden');

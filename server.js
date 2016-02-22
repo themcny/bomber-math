@@ -43,7 +43,7 @@ io.on('connection', function(socket){
         socket.join(socket.room)
         // Find the player already in the room and assign as playerOne
         var playerOneObj = io.sockets.adapter.rooms[socket.room].sockets;
-        var playerOneId = Object.keys(playerOneObj)[0]
+        var playerOneId = Object.keys(playerOneObj)[0].cleanId()
         var playerOne = new Player({id: playerOneId, playerId: 1})
         // Find the new player and assign as playerTwo
         var playerTwo = new Player({id: socket.id, playerId: 2});
@@ -69,11 +69,15 @@ io.on('connection', function(socket){
 function makeNewRoom(socket) {
   var newRoomId = (Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000).toString();
   var newRoom = new Room({id: newRoomId});
-  newRoom.players.push(socket.id)
+  newRoom.players.push(socket.id.cleanId())
   gameRooms.push(newRoom);
   socket.room = newRoom.roomId;
   socket.join(newRoom.roomId);
   io.to(socket.id).emit('waiting');
+}
+
+String.prototype.cleanId = function() {
+  return this.substring(2, this.length)
 }
 
 function Room(options) {
