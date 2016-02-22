@@ -35,3 +35,20 @@ form button { width: 9%; }
   50%{transform:rotate(-15deg);}
   100%{transform:rotate(-30deg);}
 }
+.cannon-ball{
+  border:1px solid red;
+  display:inline-block;
+}
+#ball-one{
+  position:fixed;
+  left: 260px;
+}
+#ball-two{
+  position:fixed;
+  right: 200px;
+}
+.cannon-ball-animation {
+
+}
+
+
