@@ -1,8 +1,8 @@
 ///////////////////////
 //   Socket Events   //
 ///////////////////////
-var socket = io();
 
+var socket = io();
 
 $('#join-room').on('click', function(){
     socket.emit('join room');
@@ -18,12 +18,16 @@ socket.on('game start', function(playerOne, playerTwo) {
   $('#waiting').text('');
   $('#landing').addClass('hidden');
   $('#game').removeClass('hidden');
+  $('#tank1').show();
+  $('#tank2').show();
   if (this.id === playerOne.id) {
     $('#player-name').text("Player 1")
-    togglePlayerOneUI();
+    showPlayerOneUI();
+    playerOneQuestion();
   } else if (this.id == playerTwo.id) {
     $('#player-name').text("Player 2");
-    togglePlayerTwoUI();
+    showPlayerTwoUI();
+    playerTwoQuestion();
   };
 });
 
@@ -69,28 +73,29 @@ socket.on('register damage', function(n) {
 //////////////////////////
 // Additional Functions //
 //////////////////////////
-function togglePlayerOneUI() {
-  if ($('#player-1-input').hasClass('hidden')) {
-    $('#player-1-input').removeClass('hidden');
-    $('#quiz-question-1').removeClass('hidden');
-    $('#messages-1').removeClass('hidden');
-  } else {
-    $('#player-1-input').addClass('hidden');
-    $('#quiz-question-1').addClass('hidden');
-    $('#messages-1').addClass('hidden');
-  };
+
+function showPlayerOneUI() {
+  $('#player-1-input').removeClass('hidden');
+  $('#quiz-question-1').removeClass('hidden');
+  $('#messages-1').removeClass('hidden');
+  $('#m1').focus();
+};
+function hidePlayerOneUI() {
+  $('#player-1-input').addClass('hidden');
+  $('#quiz-question-1').addClass('hidden');
+  $('#messages-1').addClass('hidden');
 };
 
-function togglePlayerTwoUI() {
-  if ($('#player-2-input').hasClass('hidden')) {
-    $('#player-2-input').removeClass('hidden');
-    $('#quiz-question-2').removeClass('hidden');
-    $('#messages-2').removeClass('hidden');
-  } else {
-    $('#player-2-input').addClass('hidden');
-    $('#quiz-question-2').addClass('hidden');
-    $('#messages-2').addClass('hidden');
-  };
+function showPlayerTwoUI() {
+  $('#player-2-input').removeClass('hidden');
+  $('#quiz-question-2').removeClass('hidden');
+  $('#messages-2').removeClass('hidden');
+  $('#m2').focus();
+}
+function hidePlayerTwoUI() {
+  $('#player-2-input').addClass('hidden');
+  $('#quiz-question-2').addClass('hidden');
+  $('#messages-2').addClass('hidden');
 };
 
 // Replacement shake effect
@@ -114,14 +119,16 @@ function damage(otherPlayer){
 }
 
 function checkWin(){
-  onehealth = parseInt(document.getElementById('onehealth').value)
-  twohealth = parseInt(document.getElementById('twohealth').value)
+  var onehealth = parseInt(document.getElementById('onehealth').value)
+  var twohealth = parseInt(document.getElementById('twohealth').value)
   if (onehealth <= 0) {
-    $('#outcome').text("Player 2 Wins!")
+    $('#quiz-question-1').text("Player 2 Wins!")
+    $('#quiz-question-2').text("Player 2 Wins!")
     $('#tank1').fadeOut('slow');
     resetPage();
   } else if (twohealth <= 0) {
-    $('#outcome').text("Player 1 Wins!")
+    $('#quiz-question-1').text("Player 1 Wins!")
+    $('#quiz-question-2').text("Player 1 Wins!")
     $('#tank2').fadeOut('slow');
     resetPage();
   };
@@ -129,10 +136,13 @@ function checkWin(){
 
 function resetPage(){
   setTimeout(function() {
+    hidePlayerOneUI();
+    hidePlayerTwoUI();
+    $('ul').empty();
+    $('#onehealth').val(100);
+    $('#twohealth').val(100);
     $('#game').addClass('hidden');
-    togglePlayerOneUI();
-    togglePlayerTwoUI();
     $('#landing').removeClass('hidden');
-  }, 4000);
+  }, 3000);
 };
 
