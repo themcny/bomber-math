@@ -24,9 +24,13 @@ function reset(player){
   }
 }
 
+function gameLoop(){
+  update();
+  render();
+  window.setTimeout(loopPlayerOne, 33 );
+}
 
 function startJump(vx, vy){
-  console.log('startJump')
   if(onGround){
     velX = vx;
     velY = vy;
@@ -34,21 +38,12 @@ function startJump(vx, vy){
   }
 }
 function endJump(){
-  console.log('endJump')
   if(velY < -6.0){
     velY = -6.0;
   }
 }
-function loopPlayerTwo(){
-  update();
-  render();
-  window.setTimeout(loopPlayerTwo, 33 );
-}
-function loopPlayerOne(){
-  update();
-  render();
-  window.setTimeout(loopPlayerOne, 33 );
-}
+
+
 function update(){
   velY += gravity;
   posY += velY;
@@ -63,11 +58,9 @@ function update(){
   socket.emit('position update', {posX: posX, posY: posY});
 }
 
-socket.on('position update', function(msg){
-  // console.log(msg);
-  posY = msg.posY;
-  posX = msg.posX;
-  // console.log('in client from server');
+socket.on('position update', function(position){
+  posY = position.posY;
+  posX = position.posX;
 });
 
 function render(){
@@ -101,3 +94,88 @@ function checkWin(){
 
 
 
+
+///////////////////////
+// Socket Events     //
+///////////////////////
+
+socket.on('answer submit p1', function(msg){
+  if (quizQuestion1.answer === parseInt(msg)) {
+
+    startJump(6.0, -1000.0);
+    endJump();
+    socket.emit('register damage', 2)
+    $('#messages-1').append($('<li>').text("Correct!"));
+  } else {
+
+    startJump(4.0, -500.0);
+    endJump();
+    $('#messages-1').append($('<li>').text("Incorrect"));
+  }
+  playerOneQuestion();
+});
+
+socket.on('answer submit p2', function(msg){
+  if (quizQuestion2.answer === parseInt(msg)) {
+
+    startJump(-6.0, -1000.0);
+    endJump();
+
+    socket.emit('register damage', 1)
+    $('#messages-2').append($('<li>').text("Correct!"));
+  } else {
+
+    startJump(-4.0, -500.0);
+    endJump();
+    $('#messages-2').append($('<li>').text("Incorrect"));
+  }
+  playerTwoQuestion();
+});
+
+socket.on('register damage', function(n) {
+  if (n == 1) {
+    damage('onehealth');
+    checkWin();
+  }
+  if (n == 2) {
+    damage('twohealth')
+    checkWin();
+  };
+});
+
+// when one player is in a room waiting for an opponent after hitting ready
+socket.on('waiting', function() {
+  $('#join-room').addClass('hidden');
+  $('#waiting').text('Waiting for an opponent...');
+});
+
+// when two players have hit ready, game begins
+socket.on('game start', function(playerOne, playerTwo) {
+  $('#waiting').text('');
+  $('#join-room').addClass('hidden');
+  $('#start-game').removeClass('hidden');
+  var thisId = "/#" + socket.id
+  if (thisId == playerOne.id) {
+    $('#player-name').text("Player 1")
+    $('#player-1-input').removeClass('hidden');
+    $('#quiz-question-1').removeClass('hidden');
+    $('#messages-1').removeClass('hidden');
+    var posX = 50.0;
+    var posY = 550.0;
+    var resetInt = setInterval(function() { reset(1) }, 10000);
+
+  } else if (thisId == playerTwo.id) {
+    $('#player-name').text("Player 2")
+    $('#player-2-input').removeClass('hidden');
+    $('#quiz-question-2').removeClass('hidden');
+    $('#messages-2').removeClass('hidden');
+    var posX = 750.0;
+    var posY = 550.0;
+    var resetInt = setInterval(function() { reset(2) }, 10000);
+  }
+  gameLoop();
+});
+
+$('#join-room').on('click', function(){
+    socket.emit('join room');
+})

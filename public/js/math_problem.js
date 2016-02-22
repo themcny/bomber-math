@@ -1,7 +1,6 @@
 var quizQuestion1;
 var quizQuestion2;
 var socket = io();
-var player = 2;
 
 $(document).ready(function(){
   playerOneQuestion();
@@ -42,123 +41,6 @@ $('#player-2-input').submit(function(){
   return false;
 });
 
-// socket.on('player update', function(playerOne, playerTwo) {
-//   console.log(playerOne)
-//   console.log(playerTwo)
-// })
 
 
 
-if (player == 1){
-  loopPlayerOne();
-  var posX = 50.0;
-  var posY = 550.0;
-  var resetInt = setInterval(function() { reset(1) }, 10000);
-} else if (player == 2){
-  loopPlayerTwo();
-  var posX = 750.0;
-  var posY = 550.0;
-  var resetInt = setInterval(function() { reset(2) }, 10000);
-}
-
-socket.on('answer submit p1', function(msg){
-  if (quizQuestion1.answer === parseInt(msg)) {
-    // if(player == 1){
-    //   // for player 1
-    //   startJump(6.0, -1000.0);
-    //   endJump();
-    //   damage('twohealth');
-    // } else if (player == 2){
-    //   // for player 2
-    //   startJump(-6.0, -1000.0);
-    //   endJump();
-    //   damage('onehealth');
-    // }
-    startJump(6.0, -1000.0);
-    endJump();
-    socket.emit('register damage', 2)
-    $('#messages-1').append($('<li>').text("Correct!"));
-  } else {
-    // if(player == 1){
-    //   // for player 1
-    //   startJump(4.0, -500.0);
-    //   endJump();
-    // } else if (player == 2){
-    //   // for player 2
-    //   startJump(-4.0, -500.0);
-    //   endJump();
-    // }
-    startJump(4.0, -500.0);
-    endJump();
-    $('#messages-1').append($('<li>').text("Incorrect"));
-  }
-  playerOneQuestion();
-});
-
-socket.on('answer submit p2', function(msg){
-  if (quizQuestion2.answer === parseInt(msg)) {
-    // if(player == 1){
-    //   // for player 1
-    //   startJump(6.0, -1000.0);
-    //   endJump();
-    //   damage('twohealth');
-    // } else if (player == 2){
-    //   // for player 2
-    //   startJump(-6.0, -1000.0);
-    //   endJump();
-    //   damage('onehealth');
-    // }
-    startJump(-6.0, -1000.0);
-    endJump();
-    socket.emit('register damage', 1)
-    $('#messages-2').append($('<li>').text("Correct!"));
-  } else {
-    // if(player == 1){
-    //   // for player 1
-    //   startJump(4.0, -500.0);
-    //   endJump();
-    // } else if (player == 2){
-    //   // for player 2
-    //   startJump(-4.0, -500.0);
-    //   endJump();
-    // }
-    startJump(-4.0, -500.0);
-    endJump();
-    $('#messages-2').append($('<li>').text("Incorrect"));
-  }
-  playerTwoQuestion();
-});
-
-socket.on('register damage', function(n) {
-  console.log("REGISTER DAMAGE CLIENT")
-  if (n == 1) {
-    damage('onehealth');
-    checkWin();
-  }
-  if (n == 2) {
-    damage('twohealth')
-    checkWin();
-  };
-});
-
-socket.on('waiting', function() {
-  $('#join-room').addClass('hidden');
-  $('#waiting').text('Waiting for an opponent...');
-});
-socket.on('game start', function(playerOne, playerTwo) {
-  $('#waiting').text('');
-  $('#join-room').addClass('hidden');
-  $('#start-game').removeClass('hidden');
-  var thisId = "/#" + socket.id
-  if (thisId == playerOne.id) {
-    $('#player-name').text("Player 1")
-    $('#player-1-input').removeClass('hidden');
-    $('#quiz-question-1').removeClass('hidden');
-    $('#messages-1').removeClass('hidden');
-  } else if (thisId == playerTwo.id) {
-    $('#player-name').text("Player 2")
-    $('#player-2-input').removeClass('hidden');
-    $('#quiz-question-2').removeClass('hidden');
-    $('#messages-2').removeClass('hidden');
-  }
-});
