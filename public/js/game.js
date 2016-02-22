@@ -11,11 +11,19 @@ function checkWin(){
   if (onehealth <= 0) {
     $('#outcome').text("Player 2 Wins!")
     $('#cannon-one').effect("explode");
-
+    resetPage();
   } else if (twohealth <= 0) {
     $('#outcome').text("Player 1 Wins!")
     $('#cannon-two').effect("explode");
+    resetPage();
   }
+}
+
+function resetPage(){
+  setTimeout(function() {
+    $('#landing').removeClass('hidden');
+    $('#game').addClass('hidden');
+  }, 3000);
 }
 
 
@@ -58,14 +66,15 @@ socket.on('register damage', function(n) {
 
 // when one player is in a room waiting for an opponent after hitting ready
 socket.on('waiting', function() {
-  $('#join-room').addClass('hidden');
+  $('#landing').addClass('hidden');
   $('#waiting').text('Waiting for an opponent...');
 });
 
 // when two players have hit ready, game begins
 socket.on('game start', function(playerOne, playerTwo) {
   $('#waiting').text('');
-  $('#join-room').addClass('hidden');
+  $('#landing').addClass('hidden');
+  $('#game').removeClass('hidden');
   $('#start-game').removeClass('hidden');
   var thisId = "/#" + socket.id
   if (thisId == playerOne.id) {
