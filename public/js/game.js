@@ -54,11 +54,13 @@ socket.on('answer submit p2', function(msg){
 socket.on('register damage', function(n) {
   if (n == 1) {
     damage('onehealth');
+    $('#ball-one').addClass("cannon-ball-animation");
     $('#tank1').effect( "shake", {times:3}, 500 );
     checkWin();
   }
   if (n == 2) {
     damage('twohealth')
+    $('#ball-two').addClass("cannon-ball-animation")
     $('#tank2').effect( "shake", {times:3}, 500 );
     checkWin();
   };

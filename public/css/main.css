@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 body {
   font: 13px Helvetica, Arial;
@@ -41,8 +41,18 @@ form button {
   background-image: url("../img/backdrop.png");
   background-repeat: no-repeat;
 }
-  .backdrop img {
-    margin-top: 42%;
-    height: 25%;
-    width: 25%;
-  }
+.cannon-ball{
+  border:1px solid red;
+  display:inline-block;
+}
+#ball-one{
+  position:fixed;
+  left: 260px;
+}
+#ball-two{
+  position:fixed;
+  right: 200px;
+}
+.cannon-ball-animation {
+
+}
