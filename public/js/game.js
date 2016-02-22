@@ -122,13 +122,15 @@ function checkWin(){
   var onehealth = parseInt(document.getElementById('onehealth').value)
   var twohealth = parseInt(document.getElementById('twohealth').value)
   if (onehealth <= 0) {
-    $('#quiz-question-1').text("Player 2 Wins!")
-    $('#quiz-question-2').text("Player 2 Wins!")
+    $('.submit-button').attr('disabled', 'disabled');
+    $('#quiz-question-1').text("Player 2 Wins!");
+    $('#quiz-question-2').text("Player 2 Wins!");
     $('#tank1').fadeOut('slow');
     resetPage();
   } else if (twohealth <= 0) {
-    $('#quiz-question-1').text("Player 1 Wins!")
-    $('#quiz-question-2').text("Player 1 Wins!")
+    $('.submit-button').attr('disabled', 'disabled');
+    $('#quiz-question-1').text("Player 1 Wins!");
+    $('#quiz-question-2').text("Player 1 Wins!");
     $('#tank2').fadeOut('slow');
     resetPage();
   };
