@@ -96,13 +96,12 @@ socket.on('game start', function(playerOne, playerTwo) {
   $('#landing').addClass('hidden');
   $('#game').removeClass('hidden');
   $('#start-game').removeClass('hidden');
-  var thisId = "/#" + socket.id
-  if (thisId == playerOne.id) {
+  if (this.id === playerOne.id) {
     $('#player-name').text("Player 1")
     $('#player-1-input').removeClass('hidden');
     $('#quiz-question-1').removeClass('hidden');
     $('#messages-1').removeClass('hidden');
-  } else if (thisId == playerTwo.id) {
+  } else if (this.id == playerTwo.id) {
     $('#player-name').text("Player 2")
     $('#player-2-input').removeClass('hidden');
     $('#quiz-question-2').removeClass('hidden');
