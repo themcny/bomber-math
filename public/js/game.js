@@ -10,11 +10,11 @@ function checkWin(){
   twohealth = parseInt(document.getElementById('twohealth').value)
   if (onehealth <= 0) {
     $('#outcome').text("Player 2 Wins!")
-    $('#tank1').effect("explode");
+    $('#tank1').fadeOut('slow');
     resetPage();
   } else if (twohealth <= 0) {
     $('#outcome').text("Player 1 Wins!")
-    $('#tank2').effect("explode");
+    $('#tank2').fadeOut('slow');
     resetPage();
   }
 }
@@ -34,6 +34,9 @@ function resetPage(){
 socket.on('answer submit p1', function(msg){
   if (quizQuestion1.answer === parseInt(msg)) {
     socket.emit('register damage', 2)
+    $('#ball-one').addClass("ball-one-animation");
+    setTimeout(function() { $('#ball-one').removeClass("ball-one-animation")}, 5000)
+
     $('#messages-1').append($('<li>').text("Correct!"));
   } else {
     $('#messages-1').append($('<li>').text("Incorrect"));
@@ -44,6 +47,8 @@ socket.on('answer submit p1', function(msg){
 socket.on('answer submit p2', function(msg){
   if (quizQuestion2.answer === parseInt(msg)) {
     socket.emit('register damage', 1)
+    $('#ball-two').addClass("ball-two-animation")
+    setTimeout(function() { $('#ball-two').removeClass("ball-two-animation"); console.log('removed')}, 5000)
     $('#messages-2').append($('<li>').text("Correct!"));
   } else {
     $('#messages-2').append($('<li>').text("Incorrect"));
