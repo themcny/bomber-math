@@ -87,8 +87,11 @@ function checkWin(){
   twohealth = parseInt(document.getElementById('twohealth').value)
   if (onehealth <= 0) {
     $('#outcome').text("Player 2 Wins!")
+    $('#cannon-one').effect("explode");
+
   } else if (twohealth <= 0) {
     $('#outcome').text("Player 1 Wins!")
+    $('#cannon-two').effect("explode");
   }
 }
 
