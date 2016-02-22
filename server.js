@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-  var gameRooms = [];
+var gameRooms = [];
 
 app.use(express.static(__dirname + '/public'));
 
@@ -11,6 +11,9 @@ app.get('/', function(req, res){
   res.sendfile('index.html');
 });
 
+http.listen(3000, function(){
+  console.log('listening on port*:3000');
+});
 
 io.on('connection', function(socket){
   var newComer = new Player({id: socket.id, playerId: 2});
@@ -62,14 +65,9 @@ io.on('connection', function(socket){
 });
 
 
-
-
-http.listen(3000, function(){
-  console.log('listening on http://192.168.1.13:3000');
-});
-
+// Set up a new instance of Room class and join room
 function makeNewRoom(socket) {
-  var newRoomId = (Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000).toString()
+  var newRoomId = (Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000).toString();
   var newRoom = new Room({id: newRoomId});
   newRoom.players.push(socket.id)
   gameRooms.push(newRoom);
@@ -84,7 +82,6 @@ function Room(options) {
 }
 
 function Player(options) {
-  this.health = 10;
   this.id = options.id;
   this.playerId = options.playerId;
 }
