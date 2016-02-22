@@ -46,18 +46,28 @@ form button {
   height: 25%;
   width:25%;
 }
-.cannon-ball{
-  border:1px solid red;
-  display:inline-block;
-}
 #ball-one{
   position:fixed;
-  left: 260px;
+  top: 39%;
+  left: 400px;
+  text-align: right;
 }
 #ball-two{
   position:fixed;
-  right: 200px;
+  top: 39%;
+  right: 775px;
 }
-.cannon-ball-animation {
-
+.ball-one-animation {
+  animation: shoot-one 5s;
+}
+@keyframes shoot-one {
+  from {left: 400px;}
+  to {left: 850px;}
+}
+.ball-two-animation{
+  animation: shoot-two 3s;
+}
+@keyframes shoot-two {
+  from {right: 775px;}
+  to{right:1225px;}
 }
