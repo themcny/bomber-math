@@ -58,16 +58,20 @@ form button {
   right: 775px;
 }
 .ball-one-animation {
-  animation: shoot-one 5s;
+  animation: shoot-one 1s;
 }
 @keyframes shoot-one {
-  from {left: 400px;}
-  to {left: 850px;}
+  0% {left: 400px;}
+  50%{left:625px; }
+  75%{left:825px;}
+  100% {left: 850px;}
 }
 .ball-two-animation{
-  animation: shoot-two 3s;
+  animation: shoot-two 1s;
 }
 @keyframes shoot-two {
-  from {right: 775px;}
-  to{right:1225px;}
+  0% {right: 775px;}
+  25%{right:1000px;}
+  75%{right:1200px;}
+  100%{right:1225px;}
 }

@@ -35,8 +35,7 @@ socket.on('answer submit p1', function(msg){
   if (quizQuestion1.answer === parseInt(msg)) {
     socket.emit('register damage', 2)
     $('#ball-one').addClass("ball-one-animation");
-    setTimeout(function() { $('#ball-one').removeClass("ball-one-animation")}, 5000)
-
+    setTimeout(function() { $('#ball-one').removeClass("ball-one-animation")}, 1000)
     $('#messages-1').append($('<li>').text("Correct!"));
   } else {
     $('#messages-1').append($('<li>').text("Incorrect"));
@@ -48,7 +47,7 @@ socket.on('answer submit p2', function(msg){
   if (quizQuestion2.answer === parseInt(msg)) {
     socket.emit('register damage', 1)
     $('#ball-two').addClass("ball-two-animation")
-    setTimeout(function() { $('#ball-two').removeClass("ball-two-animation"); console.log('removed')}, 5000)
+    setTimeout(function() { $('#ball-two').removeClass("ball-two-animation"); console.log('removed')}, 1000)
     $('#messages-2').append($('<li>').text("Correct!"));
   } else {
     $('#messages-2').append($('<li>').text("Incorrect"));
