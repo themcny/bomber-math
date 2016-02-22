@@ -3,8 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var players = {};
-var gameRooms = [];
+  var gameRooms = [];
 
 app.use(express.static(__dirname + '/public'));
 
@@ -57,10 +56,6 @@ io.on('connection', function(socket){
 
   });
 
-  socket.on('position update', function(position){
-    io.to(socket.room).emit('position update', position);
-  });
-
   socket.on('register damage', function(dmg){
     io.to(socket.room).emit('register damage', dmg)
   })
@@ -69,8 +64,7 @@ io.on('connection', function(socket){
 
 
 
-http.listen(3000, '192.168.1.75', function(){
-
+http.listen(3000, function(){
   console.log('listening on http://192.168.1.13:3000');
 });
 
