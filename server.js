@@ -37,7 +37,7 @@ io.on('connection', function(socket){
     for (var i = 0; i < gameRooms.length; i++) {
       if (gameRooms[i].players.length === 1 && gameRooms[i].players[0] !== socket.id) {
         // Join a room with a player and start game
-        console.log("here")
+
         gameRooms[i].players.push(socket.id)
         socket.room = gameRooms[i].roomId;
         socket.join(socket.room)
@@ -56,29 +56,24 @@ io.on('connection', function(socket){
       }
     }
     if (gameRooms.length === 0) {
-      console.log("####MAKE NEW ROOM####")
       makeNewRoom(socket)
     }
 
   });
 
   socket.on('position update', function(position){
-    // console.log(position)
-    // console.log('in server from client')
-    io.emit('position update', position);
+    io.to(socket.room).emit('position update', position);
   });
 
-  socket.on('register damage', function(n){
-    console.log("REGISTER DAMAGE SERVER")
-    console.log(socket.room)
-    io.emit('register damage', n)
+  socket.on('register damage', function(dmg){
+    io.to(socket.room).emit('register damage', dmg)
   })
 });
 
 
 
 
-http.listen(3000, '192.168.1.13', function(){
+http.listen(3000, '192.168.1.75', function(){
 
   console.log('listening on http://192.168.1.13:3000');
 });
