@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/themcny/bomber-math/issues"
   },
+  "engines": {
+    "node": "5.6.0"
+  },
   "homepage": "https://github.com/themcny/bomber-math#readme"
 }
