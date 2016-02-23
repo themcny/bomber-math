@@ -18,15 +18,7 @@ http.listen(3000, function(){
 io.on('connection', function(socket){
   var newComer = new Player({id: socket.id, playerId: 2});
   socket.room = 'Lobby';
-  socket.join('Lobby')
-
-  socket.on('answer submit p1', function(msg){
-    io.emit('answer submit p1', msg);
-  });
-
-  socket.on('answer submit p2', function(msg){
-    io.emit('answer submit p2', msg);
-  });
+  socket.join('Lobby');
 
   socket.on('join room', function(){
     // Leave Lobby room
@@ -43,25 +35,33 @@ io.on('connection', function(socket){
         socket.join(socket.room)
         // Find the player already in the room and assign as playerOne
         var playerOneObj = io.sockets.adapter.rooms[socket.room].sockets;
-        var playerOneId = Object.keys(playerOneObj)[0]
+        var playerOneId = Object.keys(playerOneObj)[0].cleanId();
         var playerOne = new Player({id: playerOneId, playerId: 1})
         // Find the new player and assign as playerTwo
-        var playerTwo = new Player({id: socket.id, playerId: 2});
+        var playerTwo = new Player({id: socket.id.cleanId(), playerId: 2});
         io.to(socket.room).emit('game start', playerOne, playerTwo);
       } else if (i === gameRooms.length - 1) {
         makeNewRoom(socket)
-        break
-      }
-    }
+        break;
+      };
+    };
     if (gameRooms.length === 0) {
-      makeNewRoom(socket)
-    }
+      makeNewRoom(socket);
+    };
 
+  });
+
+  socket.on('answer submit p1', function(msg){
+    io.emit('answer submit p1', msg);
+  });
+
+  socket.on('answer submit p2', function(msg){
+    io.emit('answer submit p2', msg);
   });
 
   socket.on('register damage', function(dmg){
     io.to(socket.room).emit('register damage', dmg)
-  })
+  });
 });
 
 
@@ -74,16 +74,20 @@ function makeNewRoom(socket) {
   socket.room = newRoom.roomId;
   socket.join(newRoom.roomId);
   io.to(socket.id).emit('waiting');
-}
+};
+
+String.prototype.cleanId = function() {
+  return this.substring(2, this.length);
+};
 
 function Room(options) {
   this.roomId = options.id;
-  this.players = []
-}
+  this.players = [];
+};
 
 function Player(options) {
   this.id = options.id;
   this.playerId = options.playerId;
-}
+};
 
 
