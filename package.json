@@ -1,9 +1,29 @@
 {
-  "name": "Bomber-Math",
-  "version": "0.0.1",
+  "name": "bomber-math",
+  "version": "1.0.0",
   "description": "math attack fools",
+  "main": "server.js",
   "dependencies": {
     "express": "^4.10.2",
     "socket.io": "^1.4.5"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/themcny/bomber-math.git"
+  },
+  "keywords": [
+    "math",
+    "game"
+  ],
+  "author": "copperheads-2016-hacksummit-team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/themcny/bomber-math/issues"
+  },
+  "homepage": "https://github.com/themcny/bomber-math#readme"
 }
