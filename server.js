@@ -11,9 +11,9 @@ app.get('/', function(req, res){
   res.sendfile('index.html');
 });
 
-http.listen(3000, function(){
-  console.log('listening on port*:3000');
-});
+// http.listen(3000, function(){
+//   console.log('listening on port*:3000');
+// });
 
 io.on('connection', function(socket){
   var newComer = new Player({id: socket.id, playerId: 2});
